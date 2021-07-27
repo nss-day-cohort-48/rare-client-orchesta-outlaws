@@ -11,7 +11,7 @@ export const PostProvider = (props) => {
 
     return (
         <PostContext.Provider value={{
-            getUserById
+            getUserPosts
         }}>
             {props.children}
         </PostContext.Provider>
