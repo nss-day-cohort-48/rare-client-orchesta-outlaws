@@ -36,15 +36,6 @@ export const Login = () => {
 
   return (
     <main className="container--login">
-      <dialog className="dialog dialog--auth" ref={invalidDialog}>
-        <div>Email or password was not valid.</div>
-        <button
-          className="button--close"
-          onClick={(e) => invalidDialog.current.close()}
-        >
-          Close
-        </button>
-      </dialog>
       <section>
         <form className="form--login" onSubmit={handleLogin}>
           <h1>Rare Publishing</h1>
