@@ -28,7 +28,6 @@ export const Login = () => {
           localStorage.setItem("rare_user_id", res.id);
           history.push("/");
         } else {
-          //   invalidDialog.current.showModal();
           window.alert("Email or password was not valid.");
         }
       });
