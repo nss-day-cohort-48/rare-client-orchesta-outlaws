@@ -45,22 +45,12 @@ export const Register = (props) => {
           })
       );
     } else {
-      passwordDialog.current.showModal();
+      window.alert("Passwords do not match.");
     }
   };
 
   return (
     <main style={{ textAlign: "center" }}>
-      <dialog className="dialog dialog--password" ref={passwordDialog}>
-        <div>Passwords do not match</div>
-        <button
-          className="button--close"
-          onClick={(e) => passwordDialog.current.close()}
-        >
-          Close
-        </button>
-      </dialog>
-
       <form className="form--login" onSubmit={handleRegister}>
         <h1 className="h3 mb-3 font-weight-normal">Register an account</h1>
         <fieldset>
