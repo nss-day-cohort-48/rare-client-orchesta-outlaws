@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { CategoryContext } from './CategoryProvider';
+import { BsFillGearFill, BsFillTrashFill } from 'react-icons/bs';
 import "./Category.css";
 
 export const CategoryList = () => {
-    const { getAllCategories, addCategory, categories } = useContext(CategoryContext)
+    const { getAllCategories, addCategory, categories, updateCategory, deleteCategory } = useContext(CategoryContext)
     const [newCategoryName, setNewCategoryName] = useState({})
     const history = useHistory()
 
@@ -25,6 +26,20 @@ export const CategoryList = () => {
         .then(() => history.push("/categories"))
     }
 
+    const removeCategory = (catId) => {
+        // TODO: needs to be within a modal box
+        deleteCategory(parseInt(catId))
+    }
+
+    const editCategory = (catObj) => {
+        // TODO: needs to be invoked on click within modal box with input
+        updateCategory({
+            "id": parseInt(catObj.id),
+            "label": newCategoryName.label
+        })
+        .then(() => history.push("/categories"))
+    }
+
     return (
         <>
             <div className="categories--flex--outer">
@@ -32,7 +47,19 @@ export const CategoryList = () => {
                     <h3>Categories</h3>
                     {
                         categories.map(catObj => {
-                            return <div className="categories__list--individual">{catObj.label}</div>
+                            return (
+                                <>
+                                <div className="categories--flex--inner">
+                                    <BsFillGearFill/>
+                                    <button id={catObj.id} onClick={
+                                        deleteCategory((catObj.id).toString())
+                                        }>
+                                        <BsFillTrashFill />
+                                    </button>
+                                    <div className="categories__list--individual">{catObj.label}</div>
+                                </div>
+                                </>
+                            )
                         })
                     }
                 </div>

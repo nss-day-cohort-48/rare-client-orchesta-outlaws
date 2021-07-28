@@ -3,6 +3,11 @@
     flex-direction: row;
 }
 
+.categories--flex--inner {
+    display: flex;
+    flex-direction: row;
+}
+
 .categories__list {
     flex-basis: 60%;
     margin-left: 10rem;
@@ -11,6 +16,8 @@
 
 .categories__list--individual {
     border: 1px solid black;
+    margin-left: 1rem;
+    width: 10rem;
 }
 
 .categories__new {
