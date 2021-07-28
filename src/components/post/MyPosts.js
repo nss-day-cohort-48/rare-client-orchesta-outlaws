@@ -14,14 +14,14 @@ export const MyPosts = () => {
 
     useEffect(() => {
         getPostReactions()
-    })
+    }, [])
 
 
 
     return (
         <>
 
-            <h2>My Posts</h2>
+            <h3>My Posts</h3>
 
         </>
     )

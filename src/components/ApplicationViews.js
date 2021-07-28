@@ -14,7 +14,7 @@ export const ApplicationViews = () => {
 
         <PostProvider>
             <PostReactionProvider>
-                <Route exact path="/myposts">
+                <Route exact path="/my_posts">
                     <MyPosts/>
                 </Route>
             </PostReactionProvider>
