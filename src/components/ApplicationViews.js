@@ -1,5 +1,8 @@
 import React from "react"
 import { Route } from "react-router-dom"
+import { MyPosts } from "./post/MyPosts"
+import { PostProvider } from "./post/PostProvider"
+import { PostReactionProvider } from "./postReaction/PostReactionProvdier"
 
 export const ApplicationViews = () => {
     return <>
@@ -8,5 +11,13 @@ export const ApplicationViews = () => {
             lineHeight: "1.75rem"
         }}>
         </main>
+
+        <PostProvider>
+            <PostReactionProvider>
+                <Route exact path="/my_posts">
+                    <MyPosts/>
+                </Route>
+            </PostReactionProvider>
+        </PostProvider>
     </>
 }
