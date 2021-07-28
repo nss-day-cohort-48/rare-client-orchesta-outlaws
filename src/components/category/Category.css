@@ -1,0 +1,34 @@
+.categories--flex--outer {
+    display: flex;
+    flex-direction: row;
+}
+
+.categories__list {
+    flex-basis: 60%;
+    margin-left: 10rem;
+    margin-right: 5rem;
+}
+
+.categories__list--individual {
+    border: 1px solid black;
+}
+
+.categories__new {
+    margin-right: 1rem;
+    border: 1px solid black;
+    border-radius: 10%;
+    height: 15rem;
+    width: 30rem;
+}
+
+.categories__new--fieldset {
+    padding: 1rem;
+}
+
+.categories__new--button {
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: white;
+    padding: .2rem .5rem;
+    margin-top: 1rem;
+}
