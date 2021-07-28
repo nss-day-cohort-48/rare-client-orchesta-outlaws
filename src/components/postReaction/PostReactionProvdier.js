@@ -5,7 +5,7 @@ export const PostReactionContext = createContext()
 export const PostReactionProvider = (props) => {
     const [postReactions, setPostReactions] = useState([])
 
-    const getPostReactions = (id) => {
+    const getPostReactions = () => {
         return fetch(`http://localhost:8088/postreactions`)
         .then(res => res.json())
         .then(setPostReactions)
