@@ -2,6 +2,10 @@ import React, { useContext, useEffect, useState } from "react"
 import { UserContext } from "../user/UserProvider";
 import { PostContext } from "./PostProvider"
 import { PostReactionContext } from "../postReaction/PostReactionProvdier"
+import { Link, useHistory, useParams } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import { Modal } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { FaPlus, FaTrashAlt } from "react-icons/fa";
 import { BsFillGearFill } from "react-icons/bs";
 import './Post.css'
@@ -12,18 +16,14 @@ export const MyPosts = () => {
     const { getUserPosts } = useContext(PostContext)
     const [posts, setPosts] = useState([])
     const { postReactions, getPostReactions } = useContext(PostReactionContext)
+    const [modalShow, setModalShow] = useState(false);
+    const history = useHistory()
 
     useEffect(() => {
         getUserById(parseInt(localStorage.getItem('rare_user_id')))
             .then(setUser)
-    }, [])
-
-    useEffect(() => {
         getUserPosts(parseInt(localStorage.getItem('rare_user_id')))
             .then(setPosts)
-    }, [])
-
-    useEffect(() => {
         getPostReactions()
     }, [])
 
@@ -35,11 +35,37 @@ export const MyPosts = () => {
         return date.join("")
     }
 
+    const MyVerticallyCenteredModal = (props) => {
+        return (
+            <Modal className="modal"
+                {...props}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header className="modal_header" closeButton>
+                </Modal.Header>
+                <Modal.Body>
+                    <p>
+                        Are you sure you want to delete this post?
+                    </p>
+                </Modal.Body>
+                <Modal.Footer className="modal_footer">
+                    <Button onClick={props.onHide}>Yes</Button>
+                    <Button onClick={props.onHide}>Cancel</Button>
+                </Modal.Footer>
+            </Modal>
+        );
+    }
+
     return (
         <>
 
             <div className="add-post">
-                <div className="add-post__icon"><FaPlus className="plus-icon" /></div>
+                <div className="add-post__icon"><FaPlus className="plus-icon" onClick={e => {
+                    e.preventDefault()
+                    history.push('/posts/create')
+                }} /></div>
                 <div className="add-post__text">Add Post</div>
             </div>
 
@@ -48,7 +74,11 @@ export const MyPosts = () => {
                     return (
                         <div key="p.id" className="post">
                             <div className="post__header">
-                                <div className="post__title"><h2 className="post__title">{p.title}</h2></div>
+                                <div className="post__title">
+                                    <Link to={`/posts/detail/${p.id}`}>
+                                        <h2 className="post__title">{p.title}</h2>
+                                    </Link>
+                                </div>
                                 <div className="post__date">Publication Date: {dateConvert(p.publication_date)}</div>
                             </div>
                             <div className="post__image--container">
@@ -63,8 +93,18 @@ export const MyPosts = () => {
                                         0
                                 } Reactions
                                 </div>
-                                <div className="post__edit-icon"><BsFillGearFill /></div>
-                                <div className="post__delete-icon"><FaTrashAlt /></div>
+                                <div className="post__edit-icon"><BsFillGearFill onClick={e => {
+                                    e.preventDefault()
+                                    history.push(`/posts/edit/${p.id}`)
+                                }} /></div>
+                                <div className="post__delete-icon"><FaTrashAlt onClick={e => {
+                                    e.preventDefault()
+                                    setModalShow(true)
+                                }} /></div>
+                                <MyVerticallyCenteredModal
+                                    show={modalShow}
+                                    onHide={() => setModalShow(false)}
+                                />
                             </div>
                         </div>
                     )

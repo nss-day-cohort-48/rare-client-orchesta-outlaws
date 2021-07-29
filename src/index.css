@@ -22,9 +22,9 @@ code {
 }
 
 .fakeLink {
-    color: -webkit-link;
+    color: #007bff;
     cursor: pointer;
-    text-decoration: underline;
+    text-decoration: none;
     background: none!important;
     border: none;
     cursor: pointer;
@@ -200,3 +200,10 @@ code {
 	content: "🔓";
 }
 
+a:hover {
+	text-decoration: none;
+}
+
+a:visited {
+	text-decoration: none;
+}
