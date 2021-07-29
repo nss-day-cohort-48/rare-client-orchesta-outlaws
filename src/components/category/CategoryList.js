@@ -46,8 +46,7 @@ export const CategoryList = () => {
                 <div className="categories__list">
                     <h3>Categories</h3>
                     {
-                        categories.map(catObj => {
-                            return (
+                        categories.map(catObj => (
                                 <>
                                 <div className="categories--flex--inner">
                                     <BsFillGearFill/>
@@ -56,7 +55,7 @@ export const CategoryList = () => {
                                 </div>
                                 </>
                             )
-                        })
+                        )
                     }
                 </div>
                 <div className="categories__new">
