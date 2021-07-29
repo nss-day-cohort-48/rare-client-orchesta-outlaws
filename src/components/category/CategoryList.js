@@ -79,13 +79,14 @@ export const CategoryList = () => {
         .then(() => history.push("/categories"))
     }
 
-    const deleteButton = () => {
+    const deleteButton = (catId) => {
         return (
             <>
                 <BsFillTrashFill onClick={() => setDeleteModalShow(true)}/>
                 <DeleteModal 
                     show={deleteModalShow}
                     onHide={() => setDeleteModalShow(false)}
+                    id={catId}
                 />
             </>
         )
@@ -94,22 +95,19 @@ export const CategoryList = () => {
     const DeleteModal = (props) => {
         return (
           <Modal
-          
             {...props}
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
-         
           >
-            <Modal.Header className="categories__delete_modal" closeButton>
-                
+            <Modal.Header closeButton>
             </Modal.Header>
-            <Modal.Body className="categories__delete_modal">
+            <Modal.Body>
               <p>
                 Are you sure you want to delete this category?
               </p>
-            <Button bsPrefix="categories__button">Okay</Button>{' '}
-            <Button bsPrefix="categories__button" onClick={props.onHide} >Cancel</Button>{' '}
+            <Button onClick={() => removeCategory(props.id)}>Okay</Button>{' '}
+            <Button onClick={props.onHide} >Cancel</Button>{' '}
             </Modal.Body>
 
           </Modal>
@@ -119,7 +117,8 @@ export const CategoryList = () => {
 
     const removeCategory = (catId) => {
         // TODO: needs to be within a modal box
-        deleteCategory(parseInt(catId))
+        debugger
+        deleteCategory(catId.toString())
     }
 
     return (
@@ -132,7 +131,7 @@ export const CategoryList = () => {
                                 <>
                                 <div className="categories--flex--inner">
                                     {editButton()}
-                                    {deleteButton()}
+                                    {deleteButton(catObj.id)}
                                     <div className="categories__list--individual">{catObj.label}</div>
                                 </div>
                                 </>
