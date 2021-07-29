@@ -70,6 +70,7 @@ export const CategoryList = () => {
                                 onChange={handleInputChange}
                                 defaultValue="Add text"
                             />
+                            <br/>
                             <button className="categories__new--button"
                                 onClick={event => {
                                     event.preventDefault()

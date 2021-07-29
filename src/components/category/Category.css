@@ -17,14 +17,14 @@
 .categories__list--individual {
     border: 1px solid black;
     margin-left: 1rem;
-    width: 10rem;
+    width: 15rem;
 }
 
 .categories__new {
-    margin-right: 1rem;
-    border: 1px solid black;
+    margin-right: 2rem;
+    border: 1.5px solid black;
     border-radius: 10%;
-    height: 15rem;
+    height: 12rem;
     width: 30rem;
 }
 
