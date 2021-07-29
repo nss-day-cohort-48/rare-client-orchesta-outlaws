@@ -1,5 +1,7 @@
 import React from "react"
 import { Route } from "react-router-dom"
+import { CategoryList } from "./category/CategoryList"
+import { CategoryProvider } from "./category/CategoryProvider"
 import { MyPosts } from "./post/MyPosts"
 import { PostProvider } from "./post/PostProvider"
 import { PostReactionProvider } from "./postReaction/PostReactionProvdier"
@@ -13,14 +15,19 @@ export const ApplicationViews = () => {
         }}>
         </main>
 
-        <UserProvider>
-            <PostProvider>
+      <UserProvider>
+        <PostProvider>
+            <CategoryProvider>
                 <PostReactionProvider>
                     <Route exact path="/my_posts">
-                        <MyPosts />
+                        <MyPosts/>
+                    </Route>
+                    <Route exact path="/categories">
+                        <CategoryList />
                     </Route>
                 </PostReactionProvider>
-            </PostProvider>
-        </UserProvider>
+            </CategoryProvider>
+        </PostProvider>
+      </UserProvider>
     </>
 }
