@@ -2,11 +2,16 @@ import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { CategoryContext } from './CategoryProvider';
 import { BsFillGearFill, BsFillTrashFill } from 'react-icons/bs';
+import Modal from 'react-bootstrap/Modal';
+import { Button } from 'react-bootstrap';
 import "./Category.css";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const CategoryList = () => {
     const { getAllCategories, addCategory, categories, updateCategory, deleteCategory } = useContext(CategoryContext)
     const [newCategoryName, setNewCategoryName] = useState({})
+    const [editModalShow, setEditModalShow] = useState(false)
+    const [deleteModalShow, setDeleteModalShow] = useState(false)
     const history = useHistory()
 
     useEffect(() => {
@@ -26,10 +31,44 @@ export const CategoryList = () => {
         .then(() => history.push("/categories"))
     }
 
-    const removeCategory = (catId) => {
-        // TODO: needs to be within a modal box
-        deleteCategory(parseInt(catId))
+    const editButton = () => {
+        return (
+            <>
+            <BsFillGearFill onClick={() => setEditModalShow(true)}/>
+            <EditModal
+            show={editModalShow}
+            onHide={() => setEditModalShow(false)}
+            /></>
+        )
     }
+
+    const EditModal = (props) => {
+        return (
+          <Modal
+            {...props}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+          >
+            <Modal.Header closeButton>
+              <Modal.Title id="contained-modal-title-vcenter">
+                Modal heading
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <h4>Centered Modal</h4>
+              <p>
+                Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
+                dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
+                consectetur ac, vestibulum at eros.
+              </p>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button onClick={props.onHide}>Close</Button>
+            </Modal.Footer>
+          </Modal>
+        );
+      }
 
     const editCategory = (catObj) => {
         // TODO: needs to be invoked on click within modal box with input
@@ -38,6 +77,49 @@ export const CategoryList = () => {
             "label": newCategoryName.label
         })
         .then(() => history.push("/categories"))
+    }
+
+    const deleteButton = () => {
+        return (
+            <>
+                <BsFillTrashFill onClick={() => setDeleteModalShow(true)}/>
+                <DeleteModal 
+                    show={deleteModalShow}
+                    onHide={() => setDeleteModalShow(false)}
+                />
+            </>
+        )
+    }
+
+    const DeleteModal = (props) => {
+        return (
+          <Modal
+          
+            {...props}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+         
+          >
+            <Modal.Header className="categories__delete_modal" closeButton>
+                
+            </Modal.Header>
+            <Modal.Body className="categories__delete_modal">
+              <p>
+                Are you sure you want to delete this category?
+              </p>
+            <Button bsPrefix="categories__button">Okay</Button>{' '}
+            <Button bsPrefix="categories__button" onClick={props.onHide} >Cancel</Button>{' '}
+            </Modal.Body>
+
+          </Modal>
+        );
+      }
+
+
+    const removeCategory = (catId) => {
+        // TODO: needs to be within a modal box
+        deleteCategory(parseInt(catId))
     }
 
     return (
@@ -49,8 +131,8 @@ export const CategoryList = () => {
                         categories.map(catObj => (
                                 <>
                                 <div className="categories--flex--inner">
-                                    <BsFillGearFill/>
-                                    <BsFillTrashFill />
+                                    {editButton()}
+                                    {deleteButton()}
                                     <div className="categories__list--individual">{catObj.label}</div>
                                 </div>
                                 </>
