@@ -106,7 +106,8 @@ export const CategoryList = () => {
               <p>
                 Are you sure you want to delete this category?
               </p>
-            <Button onClick={() => removeCategory(props.id)}>Okay</Button>{' '}
+            <Button onClick={() => {
+              removeCategory(props.id)}}>Okay</Button>{' '}
             <Button onClick={props.onHide} >Cancel</Button>{' '}
             </Modal.Body>
 
@@ -116,9 +117,8 @@ export const CategoryList = () => {
 
 
     const removeCategory = (catId) => {
-        // TODO: needs to be within a modal box
-        debugger
         deleteCategory(catId.toString())
+        setDeleteModalShow(false)
     }
 
     return (
