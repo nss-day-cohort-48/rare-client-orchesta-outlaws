@@ -5,6 +5,7 @@ import { CategoryProvider } from "./category/CategoryProvider"
 import { MyPosts } from "./post/MyPosts"
 import { PostProvider } from "./post/PostProvider"
 import { PostReactionProvider } from "./postReaction/PostReactionProvdier"
+import { UserProvider } from "./user/UserProvider"
 
 export const ApplicationViews = () => {
     return <>
@@ -14,6 +15,7 @@ export const ApplicationViews = () => {
         }}>
         </main>
 
+      <UserProvider>
         <PostProvider>
             <CategoryProvider>
                 <PostReactionProvider>
@@ -26,5 +28,6 @@ export const ApplicationViews = () => {
                 </PostReactionProvider>
             </CategoryProvider>
         </PostProvider>
+      </UserProvider>
     </>
 }
