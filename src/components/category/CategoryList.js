@@ -51,11 +51,7 @@ export const CategoryList = () => {
                                 <>
                                 <div className="categories--flex--inner">
                                     <BsFillGearFill/>
-                                    <button id={catObj.id} onClick={
-                                        deleteCategory((catObj.id).toString())
-                                        }>
-                                        <BsFillTrashFill />
-                                    </button>
+                                    <BsFillTrashFill />
                                     <div className="categories__list--individual">{catObj.label}</div>
                                 </div>
                                 </>
