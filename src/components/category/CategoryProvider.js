@@ -19,7 +19,7 @@ export const CategoryProvider = (props) => {
             },
             body: JSON.stringify(catObj)
         })
-        .then(getAllCategories)
+        .then(() => getAllCategories())
     }
 
     const updateCategory = catObj => {
