@@ -1,13 +1,16 @@
 import React, { useContext, useEffect, useState } from "react"
 import { PostContext } from "../post/PostProvider"
 import { CategoryContext } from "../category/CategoryProvider";
+// import { TagContext } from "../tag/TagProvider";
 import "./Post.css"
 import { useHistory, useParams } from 'react-router-dom';
+import { FaTags } from "react-icons/fa";
 
 export const PostForm = () => {
     const { addPost, updatePost, getPostById } = useContext(PostContext)
     const [post, setPost] = useState({});
     const { categories, getAllCategories } = useContext(CategoryContext)
+    // const { tags, getAllTags } = useContext(TagContext)
     const [isLoading, setIsLoading] = useState(true);
     const history = useHistory();
     const { postId } = useParams()
@@ -87,6 +90,11 @@ export const PostForm = () => {
                             </option>
                         ))}
                     </select>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div className="form-group">
+                <input type="checkbox" id="tag" required autoFocus className="form-control" value={tag.id} onChange={handleControlledInputChange} />
                 </div>
             </fieldset>
             <button className="btn btn-primary"
