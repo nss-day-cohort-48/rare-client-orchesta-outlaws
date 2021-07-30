@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { dateConvert } from "../utils/HumanDate";
 import { BsFillGearFill } from "react-icons/bs";
-import { FaTrashAlt } from "react-icons/fa";
+import { FaTrashAlt, FaPlus } from "react-icons/fa";
 import { Button, Modal } from "react-bootstrap";
 import "./Post.css";
 
@@ -30,6 +30,20 @@ export const PostList = ({ postsArray, postReactions, author }) => {
     );
   };
   return (
+    <>
+      <div className="add-post">
+        <div className="add-post__icon">
+          <FaPlus
+            className="plus-icon"
+            onClick={(e) => {
+              e.preventDefault();
+              history.push("/posts/create");
+            }}
+          />
+        </div>
+        <div className="add-post__text">Add Post</div>
+      </div>
+
     <div className="posts">
       {postsArray
         .sort((postA, postB) => {
@@ -97,6 +111,7 @@ export const PostList = ({ postsArray, postReactions, author }) => {
             </div>
           </div>
         ))}
-    </div>
+      </div>
+    </>
   );
 };
