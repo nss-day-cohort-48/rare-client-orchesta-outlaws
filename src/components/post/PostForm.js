@@ -1,15 +1,102 @@
-import React from 'react'
-import { useParams } from 'react-router-dom'
+import React, { useContext, useEffect, useState } from "react"
+import { PostContext } from "../post/PostProvider"
+import { CategoryContext } from "../category/CategoryProvider";
+import "./Post.css"
+import { useHistory, useParams } from 'react-router-dom';
 
 export const PostForm = () => {
+    const { addPost, updatePost, getPostById } = useContext(PostContext)
+    const [post, setPost] = useState({});
+    const { categories, getAllCategories } = useContext(CategoryContext)
+    const [isLoading, setIsLoading] = useState(true);
+    const history = useHistory();
     const { postId } = useParams()
 
+    useEffect(() => {
+        if (postId) {
+            getPostById(parseInt(postId))
+                .then(post => {
+                    setPost(post)
+                    setIsLoading(false)
+                })
+        } else {
+            setIsLoading(false)
+        }
+    }, [])
+
+    const handleControlledInputChange = (event) => {
+        const newPost = { ...post }
+        newPost[event.target.id] = event.target.value
+        setPost(newPost)
+    }
+
+    const handleSavePost = () => {
+        setIsLoading(true);
+        if (postId) {
+            updatePost({
+                id: parseInt(postId),
+                user_id: parseInt(localStorage.getItem('rare_user_id')),
+                category_id: post.category_id,
+                title: post.title,
+                publication_date: post.publication_date,
+                image_url: post.image_url,
+                content: post.content,
+                approved: post.approved
+            })
+                .then(() => history.push(`/posts/my_posts`))
+        } else {
+            addPost({
+                id: parseInt(postId),
+                user_id: parseInt(localStorage.getItem('rare_user_id')),
+                category_id: post.category_id,
+                title: post.title,
+                publication_date: new Date().toISOString().slice(0, 10),
+                image_url: post.image_url,
+                content: post.content,
+                approved: 0
+            })
+                .then(() => history.push("/posts/my_posts"))
+        }
+    }
 
     return (
-        <>
-
-            {postId ? <h2>Edit Post</h2> : <h2>New Post</h2>}
-
-        </>
+        <form className="post-form">
+            <h2 className="post-form__title">{postId ? <>Edit Post</> : <>New Post</>}</h2>
+            <fieldset>
+                <div className="form-group">
+                    <input type="text" id="title" required autoFocus className="form-control" placeholder="Title" value={post.title} onChange={handleControlledInputChange} />
+                </div>
+            </fieldset>
+            <fieldset>
+                <div className="form-group">
+                    <input type="text" id="image_url" required autoFocus className="form-control" placeholder="Image URL" value={post.image_url} onChange={handleControlledInputChange} />
+                </div>
+            </fieldset>
+            <fieldset>
+                <div className="form-group">
+                    <input type="text" id="content" required autoFocus className="form-control" placeholder="Article content" value={post.content} onChange={handleControlledInputChange} />
+                </div>
+            </fieldset>
+            <fieldset>
+                <div className="form-group">
+                    <select name="category_id" id="category_id" className="form-control" value={post.category_id} onChange={handleControlledInputChange}>
+                        <option value="0">Category Select</option>
+                        {categories.map(c => (
+                            <option key={c.id} value={c.id}>
+                                {c.label}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            </fieldset>
+            <button className="btn btn-primary"
+                disabled={isLoading}
+                onClick={event => {
+                    event.preventDefault() // Prevent browser from submitting the form and refreshing the page
+                    handleSavePost()
+                }}>
+                {postId ? <>Save</> : <>Publish</>}
+            </button>
+        </form>
     )
 }
