@@ -12,6 +12,5 @@ export const SubbedPosts = (props) => {
       .then(setPosts)
       .then(() => getPostReactions());
   }, []);
-  debugger;
   return <PostList postsArray={posts} postReactions={postReactions} />;
 };
