@@ -9,7 +9,7 @@ export const PostProvider = (props) => {
   };
 
   const getUserSubbedPosts = (id) => {
-    return fetch(`${apiURL}/posts?follower_id=${id}`).then((res) => res.json());
+    return fetch(`${apiURL}/subs?follower_id=${id}`).then((res) => res.json());
   };
 
   return (
