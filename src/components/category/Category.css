@@ -39,3 +39,12 @@
     padding: .2rem .5rem;
     margin-top: 1rem;
 }
+
+.categories__delete_modal {
+    background-color: rgb(134, 134, 134);
+    color: white;
+}
+
+.categories__button {
+    background-color: white;
+}
