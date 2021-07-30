@@ -12,7 +12,7 @@ export const PostForm = () => {
     const [post, setPost] = useState({});
     const { categories, getAllCategories } = useContext(CategoryContext)
     // const { tags, getAllTags } = useContext(TagContext)
-    // const { getPostTagsByPostId, createPostTag } = useContext(PostTagContext)
+    // const { getPostTagsByPostId, createPostTag, deletePostTag } = useContext(PostTagContext)
     // const [postTags, setPostTags] = useState([])
     const [isLoading, setIsLoading] = useState(true);
     const history = useHistory();
@@ -20,6 +20,7 @@ export const PostForm = () => {
 
     useEffect(() => {
         if (postId) {
+            // getAllTags()
             getPostById(parseInt(postId))
                 .then(post => {
                     setPost(post)
@@ -28,6 +29,7 @@ export const PostForm = () => {
                     setIsLoading(false)
                 })
         } else {
+            // getAllTags()
             setIsLoading(false)
         }
     }, [])
@@ -39,9 +41,8 @@ export const PostForm = () => {
     }
 
     /* const handleControlledTagInputChange = (event) => {
-        const newPostTag = { ...postTag }
-        newPostTag[event.target.id] = event.target.value
-        setPostTag(newPostTag)
+        tag_id = event.target.value
+        postTags.find(pt => pt.tag_id === )
     } */
 
     const handleSavePost = () => {
@@ -57,7 +58,6 @@ export const PostForm = () => {
                 content: post.content,
                 approved: post.approved
             })
-            updatePostTag
                 .then(() => history.push(`/posts/my_posts`))
         } else {
             addPost({
@@ -110,7 +110,17 @@ export const PostForm = () => {
                     {tags.map(t => {
                         return (
                             <>
-                                <input type="checkbox" id={`tag_${t.id}`} required autoFocus className="form-control" value={t.id} onChange={handleControlledTagInputChange} />
+                                <input type="checkbox" id={`tag_${t.id}`} required autoFocus className="form-control" value={t.id} onChange={
+                                    const newPostTags = [ ...postTags ]
+                                    foundPostTag = newPostTags.find(pt => pt.tag_id === t.id)
+                                    if (foundPostTag) {
+                                        foundPostTagPosition = postTags.indexOf(foundPostTag)
+                                        newPostTags.splice(foundPostTagPosition, 1)
+                                    } else {
+                                        newPostTags.push({post_id: post.id, tag_id: t.id})
+                                    }
+                                    setPostTags(newPostTags)
+                                }/>
                                 <label htmlFor={`tag_${t.id}`}>{t.label}</label>
                             </>
                         )
