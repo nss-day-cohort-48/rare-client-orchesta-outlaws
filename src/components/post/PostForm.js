@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react"
 import { PostContext } from "../post/PostProvider"
 import { CategoryContext } from "../category/CategoryProvider";
 // import { TagContext } from "../tag/TagProvider";
+// import { PostTagContext } from ".postTag/PostTagProvider";
 import "./Post.css"
 import { useHistory, useParams } from 'react-router-dom';
 import { FaTags } from "react-icons/fa";
@@ -11,6 +12,8 @@ export const PostForm = () => {
     const [post, setPost] = useState({});
     const { categories, getAllCategories } = useContext(CategoryContext)
     // const { tags, getAllTags } = useContext(TagContext)
+    // const { getPostTagsByPostId, createPostTag } = useContext(PostTagContext)
+    // const [postTags, setPostTags] = useState([])
     const [isLoading, setIsLoading] = useState(true);
     const history = useHistory();
     const { postId } = useParams()
@@ -20,6 +23,8 @@ export const PostForm = () => {
             getPostById(parseInt(postId))
                 .then(post => {
                     setPost(post)
+                    // getPostTagsByPostId(post.id)
+                    //     .then(setPostTags)
                     setIsLoading(false)
                 })
         } else {
@@ -27,11 +32,17 @@ export const PostForm = () => {
         }
     }, [])
 
-    const handleControlledInputChange = (event) => {
+    const handleControlledPostInputChange = (event) => {
         const newPost = { ...post }
         newPost[event.target.id] = event.target.value
         setPost(newPost)
     }
+
+    /* const handleControlledTagInputChange = (event) => {
+        const newPostTag = { ...postTag }
+        newPostTag[event.target.id] = event.target.value
+        setPostTag(newPostTag)
+    } */
 
     const handleSavePost = () => {
         setIsLoading(true);
@@ -46,6 +57,7 @@ export const PostForm = () => {
                 content: post.content,
                 approved: post.approved
             })
+            updatePostTag
                 .then(() => history.push(`/posts/my_posts`))
         } else {
             addPost({
@@ -67,22 +79,22 @@ export const PostForm = () => {
             <h2 className="post-form__title">{postId ? <>Edit Post</> : <>New Post</>}</h2>
             <fieldset>
                 <div className="form-group">
-                    <input type="text" id="title" required autoFocus className="form-control" placeholder="Title" value={post.title} onChange={handleControlledInputChange} />
+                    <input type="text" id="title" required autoFocus className="form-control" placeholder="Title" value={post.title} onChange={handleControlledPostInputChange} />
                 </div>
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <input type="text" id="image_url" required autoFocus className="form-control" placeholder="Image URL" value={post.image_url} onChange={handleControlledInputChange} />
+                    <input type="text" id="image_url" required autoFocus className="form-control" placeholder="Image URL" value={post.image_url} onChange={handleControlledPostInputChange} />
                 </div>
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <input type="text" id="content" required autoFocus className="form-control" placeholder="Article content" value={post.content} onChange={handleControlledInputChange} />
+                    <input type="text" id="content" required autoFocus className="form-control" placeholder="Article content" value={post.content} onChange={handleControlledPostInputChange} />
                 </div>
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <select name="category_id" id="category_id" className="form-control" value={post.category_id} onChange={handleControlledInputChange}>
+                    <select name="category_id" id="category_id" className="form-control" value={post.category_id} onChange={handleControlledPostInputChange}>
                         <option value="0">Category Select</option>
                         {categories.map(c => (
                             <option key={c.id} value={c.id}>
@@ -92,11 +104,20 @@ export const PostForm = () => {
                     </select>
                 </div>
             </fieldset>
-            <fieldset>
+            {/* will uncomment when tags are available client-side */}
+            {/* <fieldset>
                 <div className="form-group">
-                <input type="checkbox" id="tag" required autoFocus className="form-control" value={tag.id} onChange={handleControlledInputChange} />
+                    {tags.map(t => {
+                        return (
+                            <>
+                                <input type="checkbox" id={`tag_${t.id}`} required autoFocus className="form-control" value={t.id} onChange={handleControlledTagInputChange} />
+                                <label htmlFor={`tag_${t.id}`}>{t.label}</label>
+                            </>
+                        )
+                    })
+                    }
                 </div>
-            </fieldset>
+            </fieldset> */}
             <button className="btn btn-primary"
                 disabled={isLoading}
                 onClick={event => {
