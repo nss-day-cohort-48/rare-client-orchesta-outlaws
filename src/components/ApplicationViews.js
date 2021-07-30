@@ -2,6 +2,7 @@ import React from "react";
 import { Route } from "react-router-dom";
 import { CategoryList } from "./category/CategoryList";
 import { CategoryProvider } from "./category/CategoryProvider";
+import { AllPosts } from "./post/AllPosts";
 import { MyPosts } from "./post/MyPosts";
 import { PostDetail } from "./post/PostDetail";
 import { PostForm } from "./post/PostForm";
@@ -27,8 +28,8 @@ export const ApplicationViews = () => {
               <Route exact path="/">
                 <SubbedPosts />
               </Route>
-              <Route exact path="/posts/all">
-                {"All of the posts!"}
+              <Route exact path="/posts">
+                <AllPosts />
               </Route>
               <Route exact path="/posts/my_posts">
                 <MyPosts />

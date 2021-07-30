@@ -43,8 +43,15 @@ export const PostList = ({ postsArray, postReactions, author }) => {
         </div>
         <div className="add-post__text">Add Post</div>
       </div>
-      <div className="posts">
-        {postsArray.map((p) => (
+
+    <div className="posts">
+      {postsArray
+        .sort((postA, postB) => {
+          return (
+            new Date(postB.publication_date) - new Date(postA.publication_date)
+          );
+        })
+        .map((p) => (
           <div key={p.id} className="post">
             <div className="post__header">
               <div className="post__title">
