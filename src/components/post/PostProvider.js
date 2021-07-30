@@ -4,6 +4,11 @@ export const PostContext = createContext();
 
 export const PostProvider = (props) => {
   const apiURL = "http://localhost:8088";
+
+  const getAllPosts = () => {
+    return fetch(`${apiURL}/posts`).then((res) => res.json());
+  };
+
   const getUserPosts = (id) => {
     return fetch(`${apiURL}/posts?user_id=${id}`).then((res) => res.json());
   };
@@ -17,6 +22,7 @@ export const PostProvider = (props) => {
       value={{
         getUserPosts,
         getUserSubbedPosts,
+        getAllPosts,
       }}
     >
       {props.children}
