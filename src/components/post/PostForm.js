@@ -41,8 +41,15 @@ export const PostForm = () => {
     }
 
     /* const handleControlledTagInputChange = (event) => {
-        tag_id = event.target.value
-        postTags.find(pt => pt.tag_id === )
+        const newPostTags = [ ...postTags ]
+        foundPostTag = newPostTags.find(pt => pt.tag_id === event.target.value)
+        if (foundPostTag) {
+            foundPostTagPosition = postTags.indexOf(foundPostTag)
+            newPostTags.splice(foundPostTagPosition, 1)
+        } else {
+            newPostTags.push({post_id: post.id, tag_id: event.target.value})
+        }
+        setPostTags(newPostTags)
     } */
 
     const handleSavePost = () => {
@@ -110,17 +117,7 @@ export const PostForm = () => {
                     {tags.map(t => {
                         return (
                             <>
-                                <input type="checkbox" id={`tag_${t.id}`} required autoFocus className="form-control" value={t.id} onChange={
-                                    const newPostTags = [ ...postTags ]
-                                    foundPostTag = newPostTags.find(pt => pt.tag_id === t.id)
-                                    if (foundPostTag) {
-                                        foundPostTagPosition = postTags.indexOf(foundPostTag)
-                                        newPostTags.splice(foundPostTagPosition, 1)
-                                    } else {
-                                        newPostTags.push({post_id: post.id, tag_id: t.id})
-                                    }
-                                    setPostTags(newPostTags)
-                                }/>
+                                <input type="checkbox" id={`tag_${t.id}`} required autoFocus className="form-control" value={t.id} onChange={handleControlledTagInputChange}/>
                                 <label htmlFor={`tag_${t.id}`}>{t.label}</label>
                             </>
                         )
@@ -131,7 +128,7 @@ export const PostForm = () => {
             <button className="btn btn-primary"
                 disabled={isLoading}
                 onClick={event => {
-                    event.preventDefault() // Prevent browser from submitting the form and refreshing the page
+                    event.preventDefault()
                     handleSavePost()
                 }}>
                 {postId ? <>Save</> : <>Publish</>}
