@@ -12,7 +12,7 @@ export const PostDetail = () => {
 
             <h2>Post Id {parseInt(postId)}</h2>
             <div>
-            <Link to={`/comments?post_id=${postId}`}><button>
+            <Link to={`/comments/${postId}`}><button>
                 View Comments</button>
             </Link>
             </div>
