@@ -13,7 +13,24 @@ export const AllPosts = (props) => {
   }, []);
   return (
     <Table bordered>
-      <thead></thead>
+      <thead>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Date</th>
+        <th>Category</th>
+        <th>Tags</th>
+      </thead>
+      {posts.map((p) => (
+        <tr key={p.id}>
+          <td>{p.title}</td>
+          <td>
+            {p.rare_user.user.first_name + " " + p.rare_user.user.last_name}
+          </td>
+          <td>{p.publication_date}</td>
+          <td>{p.category.label}</td>
+          <td>TAGS</td>
+        </tr>
+      ))}
     </Table>
   );
 };
