@@ -41,3 +41,5 @@ const setUser = (token) => {
 const clearUser = () => {
   localStorage.removeItem(tokenKey);
 };
+
+export const userToken = () => localStorage.getItem(tokenKey);
