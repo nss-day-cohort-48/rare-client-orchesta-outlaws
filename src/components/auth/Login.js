@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { login } from "../../utils/auth";
 import "./Auth.css";
 
 export const Login = () => {
@@ -10,27 +11,14 @@ export const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-
-    return fetch("http://127.0.0.1:8088/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      body: JSON.stringify({
-        email: email.current.value,
-        password: password.current.value,
-      }),
-    })
-      .then((res) => res.json())
-      .then((res) => {
-        if (res.id) {
-          localStorage.setItem("rare_user_id", res.id);
-          history.push("/");
-        } else {
-          window.alert("Email or password was not valid.");
-        }
-      });
+    login(email.current.value, password.current.value).then((res) => {
+      if (res.id) {
+        localStorage.setItem("rare_user_id", res.id);
+        history.push("/");
+      } else {
+        window.alert("Email or password was not valid.");
+      }
+    });
   };
 
   return (
