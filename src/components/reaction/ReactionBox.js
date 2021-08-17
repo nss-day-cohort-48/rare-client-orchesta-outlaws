@@ -97,10 +97,11 @@ export const ReactionBox = () => {
                 <button className="reaction_create_new" onClick={() => {setModalShow(true)}}>
                     <BsPlusCircleFill />
                 </button>
-                <ReactionModal 
-                    show={modalShow}
-                    onHide={() => setModalShow(false)}
-                />
+                {ReactionModal({
+                    show: modalShow,
+                    onHide: () => setModalShow(false),
+                })}
+}
             </div>
         </>
     )

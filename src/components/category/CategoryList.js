@@ -153,10 +153,10 @@ export const CategoryList = () => {
                     }}
                   />
                 </button>
-                <DeleteModal
-                  show={deleteModalShow}
-                  onHide={() => setDeleteModalShow(false)}
-                />
+                {DeleteModal({
+                  show: deleteModalShow,
+                  onHide: () => setDeleteModalShow(false)
+                  })}
                 <div className="categories__list--individual">
                   {catObj.label}
                 </div>
