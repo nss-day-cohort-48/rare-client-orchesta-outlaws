@@ -9,47 +9,53 @@ import { PostForm } from "./post/PostForm";
 import { PostProvider } from "./post/PostProvider";
 import { SubbedPosts } from "./post/SubbedPosts";
 import { PostReactionProvider } from "./postReaction/PostReactionProvdier";
+import { PostTagProvider } from "./postTag/PostTagProvider";
+import { TagProvider } from "./tag/TagProvider";
 import { UserProvider } from "./user/UserProvider";
 
 export const ApplicationViews = () => {
-  return (
-    <>
-      <main
-        style={{
-          margin: "5rem 2rem",
-          lineHeight: "1.75rem",
-        }}
-      ></main>
+    return (
+        <>
+            <main
+                style={{
+                    margin: "5rem 2rem",
+                    lineHeight: "1.75rem",
+                }}
+            ></main>
 
-      <UserProvider>
-        <PostProvider>
-          <CategoryProvider>
-            <PostReactionProvider>
-              <Route exact path="/">
-                <SubbedPosts />
-              </Route>
-              <Route exact path="/posts">
-                <AllPosts />
-              </Route>
-              <Route exact path="/posts/my_posts">
-                <MyPosts />
-              </Route>
-              <Route exact path="/posts/detail/:postId(\d+)">
-                <PostDetail />
-              </Route>
-              <Route exact path="/posts/create">
-                <PostForm />
-              </Route>
-              <Route exact path="/posts/edit/:postId(\d+)">
-                <PostForm />
-              </Route>
-              <Route exact path="/categories">
-                <CategoryList />
-              </Route>
-            </PostReactionProvider>
-          </CategoryProvider>
-        </PostProvider>
-      </UserProvider>
-    </>
-  );
+            <UserProvider>
+                <PostProvider>
+                    <CategoryProvider>
+                        <PostReactionProvider>
+                            <TagProvider>
+                                <PostTagProvider>
+                                    <Route exact path="/">
+                                        <SubbedPosts />
+                                    </Route>
+                                    <Route exact path="/posts">
+                                        <AllPosts />
+                                    </Route>
+                                    <Route exact path="/posts/my_posts">
+                                        <MyPosts />
+                                    </Route>
+                                    <Route exact path="/posts/detail/:postId(\d+)">
+                                        <PostDetail />
+                                    </Route>
+                                    <Route exact path="/posts/create">
+                                        <PostForm />
+                                    </Route>
+                                    <Route exact path="/posts/edit/:postId(\d+)">
+                                        <PostForm />
+                                    </Route>
+                                    <Route exact path="/categories">
+                                        <CategoryList />
+                                    </Route>
+                                </PostTagProvider>
+                            </TagProvider>
+                        </PostReactionProvider>
+                    </CategoryProvider>
+                </PostProvider>
+            </UserProvider>
+        </>
+    );
 };

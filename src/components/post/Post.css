@@ -93,3 +93,7 @@
     display: flex;
     justify-content: space-evenly;
 }
+
+.tags {
+    display: flex;
+}

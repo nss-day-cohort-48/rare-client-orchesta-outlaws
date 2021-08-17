@@ -1,35 +1,36 @@
 import React, { useContext, useEffect, useState } from "react"
 import { PostContext } from "../post/PostProvider"
 import { CategoryContext } from "../category/CategoryProvider";
-// import { TagContext } from "../tag/TagProvider";
-// import { PostTagContext } from ".postTag/PostTagProvider";
+import { TagContext } from "../tag/TagProvider";
+import { PostTagContext } from "../postTag/PostTagProvider";
 import "./Post.css"
 import { useHistory, useParams } from 'react-router-dom';
-import { FaTags } from "react-icons/fa";
 
 export const PostForm = () => {
-    const { addPost, updatePost, getPostById } = useContext(PostContext)
+    const { createPost, updatePost, getPostById } = useContext(PostContext)
     const [post, setPost] = useState({});
     const { categories, getAllCategories } = useContext(CategoryContext)
-    // const { tags, getAllTags } = useContext(TagContext)
-    // const { getPostTagsByPostId, createPostTag, deletePostTag } = useContext(PostTagContext)
-    // const [postTags, setPostTags] = useState([])
+    const { tags, getAllTags } = useContext(TagContext)
+    const { getPostTagsByPostId, createPostTag, deletePostTag } = useContext(PostTagContext)
+    const [postTags, setPostTags] = useState([])
     const [isLoading, setIsLoading] = useState(true);
     const history = useHistory();
     const { postId } = useParams()
 
     useEffect(() => {
         if (postId) {
-            // getAllTags()
+            getAllCategories()
+            getAllTags()
             getPostById(parseInt(postId))
                 .then(post => {
                     setPost(post)
-                    // getPostTagsByPostId(post.id)
-                    //     .then(setPostTags)
+                    getPostTagsByPostId(post.id)
+                        .then(setPostTags)
                     setIsLoading(false)
                 })
         } else {
-            // getAllTags()
+            getAllCategories()
+            getAllTags()
             setIsLoading(false)
         }
     }, [])
@@ -40,17 +41,34 @@ export const PostForm = () => {
         setPost(newPost)
     }
 
-    /* const handleControlledTagInputChange = (event) => {
-        const newPostTags = [ ...postTags ]
-        foundPostTag = newPostTags.find(pt => pt.tag_id === event.target.value)
+    const handleControlledTagInputChange = (event) => {
+        const newPostTags = [...postTags]
+        const foundPostTag = newPostTags.find(pt => pt.tag_id === parseInt(event.target.value))
         if (foundPostTag) {
-            foundPostTagPosition = postTags.indexOf(foundPostTag)
-            newPostTags.splice(foundPostTagPosition, 1)
+            if (postId) {
+                deletePostTag(foundPostTag.id)
+                getPostTagsByPostId(post.id)
+                .then(postTags => {setPostTags(postTags)})
+            } else {
+                const foundPostTagPosition = postTags.indexOf(foundPostTag)
+                newPostTags.splice(foundPostTagPosition, 1)
+                setPostTags(newPostTags)
+            }
         } else {
-            newPostTags.push({post_id: post.id, tag_id: event.target.value})
+            if (postId) {
+                createPostTag({
+                    post_id: post.id,
+                    tag_id: parseInt(event.target.value)
+                })
+                getPostTagsByPostId(post.id)
+                .then(postTags => {setPostTags(postTags)})
+            } else {
+                newPostTags.push({ post_id: null, tag_id: parseInt(event.target.value) })
+                setPostTags(newPostTags)
+            }
         }
-        setPostTags(newPostTags)
-    } */
+    }
+
 
     const handleSavePost = () => {
         setIsLoading(true);
@@ -67,7 +85,7 @@ export const PostForm = () => {
             })
                 .then(() => history.push(`/posts/my_posts`))
         } else {
-            addPost({
+            createPost({
                 id: parseInt(postId),
                 user_id: parseInt(localStorage.getItem('rare_user_id')),
                 category_id: post.category_id,
@@ -77,6 +95,15 @@ export const PostForm = () => {
                 content: post.content,
                 approved: 0
             })
+                .then(post => {
+                    Promise.all(postTags.map(pt => {
+                        createPostTag({
+                            tag_id: pt.tag_id,
+                            post_id: post.id
+                        })
+
+                    }))
+                })
                 .then(() => history.push("/posts/my_posts"))
         }
     }
@@ -111,20 +138,39 @@ export const PostForm = () => {
                     </select>
                 </div>
             </fieldset>
-            {/* will uncomment when tags are available client-side */}
-            {/* <fieldset>
-                <div className="form-group">
+
+            <fieldset>
+                <div className="form-group tags">
                     {tags.map(t => {
-                        return (
-                            <>
-                                <input type="checkbox" id={`tag_${t.id}`} required autoFocus className="form-control" value={t.id} onChange={handleControlledTagInputChange}/>
-                                <label htmlFor={`tag_${t.id}`}>{t.label}</label>
-                            </>
-                        )
+                        if (postTags.length > 0) {
+                            const foundPostTag = postTags.find(pt => pt.tag_id === t.id)
+                            if (foundPostTag) {
+                                return (
+                                    <>
+                                        <input type="checkbox" id={`tag_${t.id}`} required autoFocus className="checkbox" value={t.id} checked='checked' onChange={handleControlledTagInputChange} />
+                                        <label htmlFor={`tag_${t.id}`}>{t.label}</label>
+                                    </>
+                                )
+                            } else {
+                                return (
+                                    <>
+                                        <input type="checkbox" id={`tag_${t.id}`} required autoFocus className="checkbox" value={t.id} onChange={handleControlledTagInputChange} />
+                                        <label htmlFor={`tag_${t.id}`}>{t.label}</label>
+                                    </>
+                                )
+                            }
+                        } else {
+                            return (
+                                <>
+                                    <input type="checkbox" id={`tag_${t.id}`} required autoFocus className="checkbox" value={t.id} onChange={handleControlledTagInputChange} />
+                                    <label htmlFor={`tag_${t.id}`}>{t.label}</label>
+                                </>
+                            )
+                        }
                     })
                     }
                 </div>
-            </fieldset> */}
+            </fieldset>
             <button className="btn btn-primary"
                 disabled={isLoading}
                 onClick={event => {
