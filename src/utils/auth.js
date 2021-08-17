@@ -31,6 +31,26 @@ export const login = (username, password) =>
       }
     });
 
+export const register = (user) => {
+  return fetch(apiURL + "/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+    body: JSON.stringify(user),
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.token) {
+        setUser(res.token);
+        return true;
+      } else {
+        return false;
+      }
+    });
+};
+
 // TODO update this to "rare_user_token"
 const tokenKey = "rare_user_id";
 
