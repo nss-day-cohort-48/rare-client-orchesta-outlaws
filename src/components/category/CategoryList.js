@@ -3,14 +3,14 @@ import { useHistory } from 'react-router-dom';
 import { CategoryContext } from './CategoryProvider';
 import { BsFillGearFill, BsFillTrashFill } from 'react-icons/bs';
 import Modal from 'react-bootstrap/Modal';
-import { Button } from 'react-bootstrap';
+import { Button, InputGroup, FormControl } from 'react-bootstrap';
 import "./Category.css";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export const CategoryList = () => {
     const { getAllCategories, addCategory, categories, updateCategory, deleteCategory } = useContext(CategoryContext)
     const [newCategoryName, setNewCategoryName] = useState({})
-    const [localCatId, setLocalCatId] = useState({})
+    const [localCat, setLocalCat] = useState({})
     const [editModalShow, setEditModalShow] = useState(false)
     const [deleteModalShow, setDeleteModalShow] = useState(false)
     const history = useHistory()
@@ -19,9 +19,10 @@ export const CategoryList = () => {
         getAllCategories()
     }, [])
 
+    // Code to handle modal pop-up and saving a new category
     const handleInputChange = (event) => {
         const newCat = {}
-        newCat.label = event.target.value
+        newCat["label"] = event.target.value
         setNewCategoryName(newCat)
     }
 
@@ -32,16 +33,12 @@ export const CategoryList = () => {
         .then(() => history.push("/categories"))
     }
 
-    const editButton = () => {
-        return (
-            <>
-            <BsFillGearFill onClick={() => setEditModalShow(true)}/>
-            <EditModal
-            show={editModalShow}
-            onHide={() => setEditModalShow(false)}
-            />
-            </>
-        )
+    // Code to handle editing a category
+    const handleEditCategory = (event) => {
+        const editedCat = {...localCat}
+        editedCat[event.target.name] = event.target.value
+        console.log(editedCat)
+        setLocalCat(editedCat)
     }
 
     const EditModal = (props) => {
@@ -58,14 +55,22 @@ export const CategoryList = () => {
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-              <h4>Centered Modal</h4>
-              <p>
-                Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                consectetur ac, vestibulum at eros.
-              </p>
+            <InputGroup className="mb-3">
+              <FormControl
+                aria-label="Username"
+                aria-describedby="basic-addon1"
+                name="label" 
+                defaultValue={localCat.label} 
+                onChange={handleEditCategory} 
+                required
+              />
+            </InputGroup>
             </Modal.Body>
             <Modal.Footer>
+              <Button onClick={() => {
+                    editCategory(localCat)
+                    setEditModalShow(false)
+                    }}>Save</Button>
               <Button onClick={props.onHide}>Close</Button>
             </Modal.Footer>
           </Modal>
@@ -73,27 +78,14 @@ export const CategoryList = () => {
       }
 
     const editCategory = (catObj) => {
-        // TODO: needs to be invoked on click within modal box with input
         updateCategory({
             "id": parseInt(catObj.id),
-            "label": newCategoryName.label
+            "label": catObj.label
         })
         .then(() => history.push("/categories"))
     }
 
-    // const deleteButton = (catId) => {
-    //     return (
-    //         <>
-    //             <BsFillTrashFill onClick={() => setDeleteModalShow(true)}/>
-    //             <DeleteModal 
-    //                 show={deleteModalShow}
-    //                 onHide={() => setDeleteModalShow(false)}
-    //                 id={catId}
-    //             />
-    //         </>
-    //     )
-    // }
-
+    // Code to handle modal pop-up and deleting of category objects
     const DeleteModal = (props) => {
       
         return (
@@ -110,17 +102,16 @@ export const CategoryList = () => {
                 Are you sure you want to delete this category?
               </p>
             <Button onClick={() => {
-              removeCategory(localCatId)}}>Okay</Button>{' '}
+              removeCategory(localCat.id)}}>Okay</Button>{' '}
             <Button onClick={props.onHide} >Cancel</Button>{' '}
             </Modal.Body>
-
           </Modal>
         );
       }
 
 
     const removeCategory = () => {
-        deleteCategory(localCatId)
+        deleteCategory(localCat.id)
         setDeleteModalShow(false)
     }
 
@@ -134,7 +125,7 @@ export const CategoryList = () => {
                                 <>
                                 <div className="categories--flex--inner" value={catObj.id}>
                                 
-                                    <button className="invisibutton" value={catObj.id} onClick={() => setLocalCatId(catObj.id)}>
+                                    <button className="invisibutton" value={catObj.id} onClick={() => setLocalCat(catObj)}>
                                     <BsFillGearFill onClick={() => setEditModalShow(true)}/>
                                     </button>
                                     <EditModal
@@ -142,7 +133,7 @@ export const CategoryList = () => {
                                     onHide={() => setEditModalShow(false)}
                                     />
 
-                                    <button className="invisibutton" onClick={() => setLocalCatId(catObj.id)}>
+                                    <button className="invisibutton" onClick={() => setLocalCat(catObj)}>
                                     <BsFillTrashFill onClick={() => {
                                       setDeleteModalShow(true)}}/>
                                     </button>
@@ -162,13 +153,14 @@ export const CategoryList = () => {
                         <h3>Create a new Category</h3>
                             <input type="text" required autoFocus 
                                 onChange={handleInputChange}
-                                defaultValue="Add text"
+                                defaultValue={""}
                             />
                             <br/>
                             <button className="categories__new--button"
                                 onClick={event => {
                                     event.preventDefault()
                                     handleSaveCategory()
+                                    history.push("/categories")
                                 }}
                             >Create</button>
                     </fieldset>
