@@ -11,8 +11,9 @@ export const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    login(email.current.value, password.current.value).then((success) => {
-      if (success) {
+    login(email.current.value, password.current.value).then((res) => {
+      if (res.id) {
+        localStorage.setItem("rare_user_id", res.id);
         history.push("/");
       } else {
         window.alert("Email or password was not valid.");
