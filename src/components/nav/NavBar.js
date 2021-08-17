@@ -28,6 +28,11 @@ export const NavBar = () => {
           Category Manager
         </Link>
       </li>
+      <li className="navbar__item">
+        <Link className="navbar__link" to="/reactions">
+          Reaction Manager
+        </Link>
+      </li>
       {localStorage.getItem("rare_user_id") !== null ? (
         <li className="nav-item">
           <button
