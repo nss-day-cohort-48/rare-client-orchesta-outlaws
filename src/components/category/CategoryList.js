@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 export const CategoryList = () => {
     const { getAllCategories, addCategory, categories, updateCategory, deleteCategory } = useContext(CategoryContext)
     const [newCategoryName, setNewCategoryName] = useState({})
+    const [localCatId, setLocalCatId] = useState({})
     const [editModalShow, setEditModalShow] = useState(false)
     const [deleteModalShow, setDeleteModalShow] = useState(false)
     const history = useHistory()
@@ -38,7 +39,8 @@ export const CategoryList = () => {
             <EditModal
             show={editModalShow}
             onHide={() => setEditModalShow(false)}
-            /></>
+            />
+            </>
         )
     }
 
@@ -79,20 +81,21 @@ export const CategoryList = () => {
         .then(() => history.push("/categories"))
     }
 
-    const deleteButton = (catId) => {
-        return (
-            <>
-                <BsFillTrashFill onClick={() => setDeleteModalShow(true)}/>
-                <DeleteModal 
-                    show={deleteModalShow}
-                    onHide={() => setDeleteModalShow(false)}
-                    id={catId}
-                />
-            </>
-        )
-    }
+    // const deleteButton = (catId) => {
+    //     return (
+    //         <>
+    //             <BsFillTrashFill onClick={() => setDeleteModalShow(true)}/>
+    //             <DeleteModal 
+    //                 show={deleteModalShow}
+    //                 onHide={() => setDeleteModalShow(false)}
+    //                 id={catId}
+    //             />
+    //         </>
+    //     )
+    // }
 
     const DeleteModal = (props) => {
+      
         return (
           <Modal
             {...props}
@@ -107,7 +110,7 @@ export const CategoryList = () => {
                 Are you sure you want to delete this category?
               </p>
             <Button onClick={() => {
-              removeCategory(props.id)}}>Okay</Button>{' '}
+              removeCategory(localCatId)}}>Okay</Button>{' '}
             <Button onClick={props.onHide} >Cancel</Button>{' '}
             </Modal.Body>
 
@@ -116,8 +119,8 @@ export const CategoryList = () => {
       }
 
 
-    const removeCategory = (catId) => {
-        deleteCategory(catId.toString())
+    const removeCategory = () => {
+        deleteCategory(localCatId)
         setDeleteModalShow(false)
     }
 
@@ -129,9 +132,24 @@ export const CategoryList = () => {
                     {
                         categories.map(catObj => (
                                 <>
-                                <div className="categories--flex--inner">
-                                    {editButton()}
-                                    {deleteButton(catObj.id)}
+                                <div className="categories--flex--inner" value={catObj.id}>
+                                
+                                    <button className="invisibutton" value={catObj.id} onClick={() => setLocalCatId(catObj.id)}>
+                                    <BsFillGearFill onClick={() => setEditModalShow(true)}/>
+                                    </button>
+                                    <EditModal
+                                    show={editModalShow}
+                                    onHide={() => setEditModalShow(false)}
+                                    />
+
+                                    <button className="invisibutton" onClick={() => setLocalCatId(catObj.id)}>
+                                    <BsFillTrashFill onClick={() => {
+                                      setDeleteModalShow(true)}}/>
+                                    </button>
+                                    <DeleteModal 
+                                        show={deleteModalShow}
+                                        onHide={() => setDeleteModalShow(false)}
+                                    />
                                     <div className="categories__list--individual">{catObj.label}</div>
                                 </div>
                                 </>

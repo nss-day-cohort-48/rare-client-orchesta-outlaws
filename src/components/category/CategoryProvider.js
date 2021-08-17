@@ -8,7 +8,7 @@ export const CategoryProvider = (props) => {
     const getAllCategories = () => {
         return fetch("http://localhost:8000/categories", {
             headers: {
-                "Authorization": "Token b0935533e22f91a6437fdbc3f2f54b778f349fd5"
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             }
         })
         .then(res => res.json())
@@ -20,7 +20,7 @@ export const CategoryProvider = (props) => {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Token ${localStorage.getItem("lu_token")}`
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             },
             body: JSON.stringify(catObj)
         })
@@ -32,7 +32,7 @@ export const CategoryProvider = (props) => {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
-                "Authorization": `Token ${localStorage.getItem("lu_token")}`
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             },
             body: JSON.stringify(catObj)
         })
@@ -43,7 +43,7 @@ export const CategoryProvider = (props) => {
         return fetch(`http://localhost:8000/categories/${catId}`, {
             method: "DELETE",
             headers: {
-                "Authorization": `Token ${localStorage.getItem("lu_token")}`
+                "Authorization": `Token ${localStorage.getItem("rare_user_id")}`
             }
         })
         .then(getAllCategories)
