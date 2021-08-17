@@ -1,20 +1,22 @@
 import React, { createContext } from "react";
+import { apiURL } from "../../utils/api";
+import { authFetch } from "../../utils/auth";
 
 export const PostContext = createContext();
 
 export const PostProvider = (props) => {
-  const apiURL = "http://localhost:8088";
-
   const getAllPosts = () => {
-    return fetch(`${apiURL}/posts`).then((res) => res.json());
+    return authFetch(`${apiURL}/posts`).then((res) => res.json());
   };
 
   const getUserPosts = (id) => {
-    return fetch(`${apiURL}/posts?user_id=${id}`).then((res) => res.json());
+    return authFetch(`${apiURL}/posts?user_id=${id}`).then((res) => res.json());
   };
 
   const getUserSubbedPosts = (id) => {
-    return fetch(`${apiURL}/subs?follower_id=${id}`).then((res) => res.json());
+    return authFetch(`${apiURL}/subs?follower_id=${id}`).then((res) =>
+      res.json()
+    );
   };
 
   return (

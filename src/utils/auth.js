@@ -1,5 +1,16 @@
 import { apiURL } from "./api";
 
+export const authFetch = (url, options) => {
+  const token = `Token ${userToken()}`;
+  const newOptions = { ...options };
+  if ("headers" in newOptions) {
+    newOptions.headers.Authorization = token;
+  } else {
+    newOptions.headers = { Authorization: token };
+  }
+  return fetch(url, newOptions);
+};
+
 export const logout = () => {
   clearUser();
 };
