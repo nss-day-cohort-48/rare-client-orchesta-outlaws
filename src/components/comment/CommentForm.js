@@ -5,6 +5,7 @@ import { CommentContext } from './CommentProvider'
 export const CommentForm = () => {
     const { postId } = useParams()
     const history = useHistory()
+    const {createComment } = useState(CommentContext)
 
     const [comment, setComment] = useState({
         content: "",
