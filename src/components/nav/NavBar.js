@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
+import { logout } from "../../utils/auth";
 import "./NavBar.css";
 import Logo from "./rare.jpeg";
 
@@ -33,7 +34,7 @@ export const NavBar = () => {
           <button
             className="nav-link fakeLink"
             onClick={() => {
-              localStorage.removeItem("rare_user_id");
+              logout();
               history.push({ pathname: "/" });
             }}
           >
