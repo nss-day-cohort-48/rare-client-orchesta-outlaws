@@ -12,9 +12,16 @@ export const PostDetail = () => {
 
             <h2>Post Id {parseInt(postId)}</h2>
             <div>
-            <Link to={`/comments/${postId}`}><button>
+            <Link to={`/posts/${postId}/comments`}><button>
                 View Comments</button>
             </Link>
+            </div>
+            <div>
+            <button onClick={() => {
+               history.push(`/posts/${postId}/newcomment`) 
+            }}><button>
+                Add Comment</button>
+            </button>
             </div>
         </>
     )
