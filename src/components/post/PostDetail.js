@@ -10,7 +10,7 @@ export const PostDetail = () => {
 
   useEffect(() => {
     getPost(postId).then(setPost);
-  });
+  }, [postId]);
 
   return (
     <>
