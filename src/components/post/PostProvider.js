@@ -19,12 +19,17 @@ export const PostProvider = (props) => {
     );
   };
 
+  const getPost = (id) => {
+    return authFetch(`${apiURL}/posts/${id}`).then((res) => res.json());
+  };
+
   return (
     <PostContext.Provider
       value={{
         getUserPosts,
         getUserSubbedPosts,
         getAllPosts,
+        getPost,
       }}
     >
       {props.children}
