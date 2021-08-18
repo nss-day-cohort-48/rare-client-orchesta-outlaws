@@ -39,7 +39,7 @@ export const PostDetail = () => {
               <div className="reaction_container">
                 {"reactions" in post &&
                   post.reactions.map((r) => (
-                    <div class="reaction_outline">
+                    <div className="reaction_outline">
                       <Image
                         roundedCircle
                         src={r.image_url}
