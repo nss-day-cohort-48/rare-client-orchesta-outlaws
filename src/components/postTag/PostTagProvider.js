@@ -1,17 +1,19 @@
 import React, { createContext } from "react";
+import { apiURL } from "../../utils/api";
+import { authFetch } from "../../utils/auth";
+
 
 export const PostTagContext = createContext()
 
 export const PostTagProvider = (props) => {
-    const apiURL = "http://localhost:8088"
     
     const getPostTagsByPostId = id => {
-        return fetch(`${apiURL}/posttags?post_id=${id}`)
+        return authFetch(`${apiURL}/posttags?post_id=${id}`)
         .then((res) => res.json())
     }
 
     const createPostTag = postTag => {
-        return fetch(`${apiURL}/posttags`, {
+        return authFetch(`${apiURL}/posttags`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -21,7 +23,7 @@ export const PostTagProvider = (props) => {
     }
 
     const deletePostTag = id => {
-        return fetch(`${apiURL}/posttags/${id}`, {
+        return authFetch(`${apiURL}/posttags/${id}`, {
             method: "DELETE"
         })
     }
