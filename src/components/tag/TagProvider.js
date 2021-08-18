@@ -1,13 +1,14 @@
 import React, { createContext, useState } from "react";
+import { apiURL } from "../../utils/api";
+import { authFetch } from "../../utils/auth";
 
 export const TagContext = createContext()
 
 export const TagProvider = (props) => {
     const [tags, setTags] = useState([])
-    const apiURL = "http://localhost:8088"
     
     const getAllTags = () => {
-        return fetch(`${apiURL}/tags`)
+        return authFetch(`${apiURL}/tags`)
         .then((res) => res.json())
         .then(setTags)
     }
