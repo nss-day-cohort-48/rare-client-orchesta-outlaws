@@ -24,8 +24,8 @@ export const PostForm = () => {
             getPostById(parseInt(postId))
                 .then(post => {
                     setPost(post)
-                    getPostTagsByPostId(post.id)
-                        .then(setPostTags)
+                    // getPostTagsByPostId(post.id)
+                        // .then(setPostTags)
                     setIsLoading(false)
                 })
         } else {
@@ -35,38 +35,10 @@ export const PostForm = () => {
         }
     }, [])
 
-    const handleControlledPostInputChange = (event) => {
+    const handlePostInputChange = (event) => {
         const newPost = { ...post }
         newPost[event.target.id] = event.target.value
         setPost(newPost)
-    }
-
-    const handleControlledTagInputChange = (event) => {
-        const newPostTags = [...postTags]
-        const foundPostTag = newPostTags.find(pt => pt.tag_id === parseInt(event.target.value))
-        if (foundPostTag) {
-            if (postId) {
-                deletePostTag(foundPostTag.id)
-                getPostTagsByPostId(post.id)
-                .then(postTags => {setPostTags(postTags)})
-            } else {
-                const foundPostTagPosition = postTags.indexOf(foundPostTag)
-                newPostTags.splice(foundPostTagPosition, 1)
-                setPostTags(newPostTags)
-            }
-        } else {
-            if (postId) {
-                createPostTag({
-                    post_id: post.id,
-                    tag_id: parseInt(event.target.value)
-                })
-                getPostTagsByPostId(post.id)
-                .then(postTags => {setPostTags(postTags)})
-            } else {
-                newPostTags.push({ post_id: null, tag_id: parseInt(event.target.value) })
-                setPostTags(newPostTags)
-            }
-        }
     }
 
 
@@ -95,15 +67,6 @@ export const PostForm = () => {
                 content: post.content,
                 approved: 0
             })
-                .then(post => {
-                    Promise.all(postTags.map(pt => {
-                        createPostTag({
-                            tag_id: pt.tag_id,
-                            post_id: post.id
-                        })
-
-                    }))
-                })
                 .then(() => history.push("/posts/my_posts"))
         }
     }
@@ -113,22 +76,22 @@ export const PostForm = () => {
             <h2 className="post-form__title">{postId ? <>Edit Post</> : <>New Post</>}</h2>
             <fieldset>
                 <div className="form-group">
-                    <input type="text" id="title" required autoFocus className="form-control" placeholder="Title" value={post.title} onChange={handleControlledPostInputChange} />
+                    <input type="text" id="title" required autoFocus className="form-control" placeholder="Title" value={post.title} onChange={handlePostInputChange} />
                 </div>
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <input type="text" id="image_url" required autoFocus className="form-control" placeholder="Image URL" value={post.image_url} onChange={handleControlledPostInputChange} />
+                    <input type="text" id="image_url" required autoFocus className="form-control" placeholder="Image URL" value={post.image_url} onChange={handlePostInputChange} />
                 </div>
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <input type="text" id="content" required autoFocus className="form-control" placeholder="Article content" value={post.content} onChange={handleControlledPostInputChange} />
+                    <input type="text" id="content" required autoFocus className="form-control" placeholder="Article content" value={post.content} onChange={handlePostInputChange} />
                 </div>
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <select name="category_id" id="category_id" className="form-control" value={post.category_id} onChange={handleControlledPostInputChange}>
+                    <select name="category_id" id="category_id" className="form-control" value={post.category_id} onChange={handlePostInputChange}>
                         <option value="0">Category Select</option>
                         {categories.map(c => (
                             <option key={c.id} value={c.id}>
@@ -141,34 +104,6 @@ export const PostForm = () => {
 
             <fieldset>
                 <div className="form-group tags">
-                    {tags.map(t => {
-                        if (postTags.length > 0) {
-                            const foundPostTag = postTags.find(pt => pt.tag_id === t.id)
-                            if (foundPostTag) {
-                                return (
-                                    <>
-                                        <input type="checkbox" id={`tag_${t.id}`} required autoFocus className="checkbox" value={t.id} checked='checked' onChange={handleControlledTagInputChange} />
-                                        <label htmlFor={`tag_${t.id}`}>{t.label}</label>
-                                    </>
-                                )
-                            } else {
-                                return (
-                                    <>
-                                        <input type="checkbox" id={`tag_${t.id}`} required autoFocus className="checkbox" value={t.id} onChange={handleControlledTagInputChange} />
-                                        <label htmlFor={`tag_${t.id}`}>{t.label}</label>
-                                    </>
-                                )
-                            }
-                        } else {
-                            return (
-                                <>
-                                    <input type="checkbox" id={`tag_${t.id}`} required autoFocus className="checkbox" value={t.id} onChange={handleControlledTagInputChange} />
-                                    <label htmlFor={`tag_${t.id}`}>{t.label}</label>
-                                </>
-                            )
-                        }
-                    })
-                    }
                 </div>
             </fieldset>
             <button className="btn btn-primary"
