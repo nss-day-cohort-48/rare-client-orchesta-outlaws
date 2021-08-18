@@ -9,6 +9,10 @@ export const PostProvider = (props) => {
     return authFetch(`${apiURL}/posts`).then((res) => res.json());
   };
 
+  const getPostById = (id) => {
+    return authFetch(`${apiURL}/posts/${id}`).then((res) => res.json());
+  };
+
   const getUserPosts = (id) => {
     return authFetch(`${apiURL}/posts?user_id=${id}`).then((res) => res.json());
   };
@@ -25,12 +29,35 @@ export const PostProvider = (props) => {
     });
   };
 
+  const createPost = (post) => {
+    return authFetch(`${apiURL}/posts`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(post),
+    }).then((res) => res.json());
+  };
+
+  const updatePost = (post) => {
+    return authFetch(`${apiURL}/posts/${post.id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(post),
+    });
+  };
+
   return (
     <PostContext.Provider
       value={{
-        getUserPosts,
-        getUserSubbedPosts,
         getAllPosts,
+        getPostById,
+        getUserSubbedPosts,
+        getUserPosts,
+        createPost,
+        updatePost,
         deletePost,
       }}
     >

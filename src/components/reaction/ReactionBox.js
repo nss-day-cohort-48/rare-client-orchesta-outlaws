@@ -7,9 +7,11 @@ import Modal from 'react-bootstrap/Modal';
 import { Button, InputGroup, FormControl } from 'react-bootstrap';
 
 export const ReactionBox = () => {
-    const { reactions, getAllReactions, createReaction } = useContext(ReactionContext)
+    const { reactions, getAllReactions, createReaction, deleteReaction } = useContext(ReactionContext)
     const [modalShow, setModalShow] = useState(false)
+    const [deleteModalShow, setDeleteModalShow] = useState(false)
     const [localReaction, setLocalReaction] = useState({})
+    const [idToDelete, setIdToDelete] = useState({})
 
     useEffect(() => {
         getAllReactions()
@@ -37,7 +39,7 @@ export const ReactionBox = () => {
         )
     }
 
-    const urlInput = (props) => {
+    const urlInput = () => {
         return (
             <InputGroup className="mb-3">
             <InputGroup.Text>Image URL</InputGroup.Text>
@@ -74,10 +76,36 @@ export const ReactionBox = () => {
               <Button onClick={(event) => {
                   event.preventDefault()
                   createReaction(localReaction)
+                  setModalShow(false)
                     }}>Save</Button>
               <Button onClick={props.onHide}>Close</Button>
             </Modal.Footer>
           </Modal>
+        )
+    }
+
+    const DeleteReactionModal = (props) => {
+        return (
+            <Modal
+                {...props}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+            <Modal.Header closeButton>
+            </Modal.Header>
+                <Modal.Body>
+                <p>Are you sure you want to delete this reaction?</p>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={(event) => {
+                        event.preventDefault()
+                        deleteReaction(idToDelete)
+                        setDeleteModalShow(false)
+                    }}>Delete</Button>
+                    <Button onClick={props.onHide}>Cancel</Button>
+                </Modal.Footer>
+            </Modal>
         )
     }
 
@@ -88,12 +116,18 @@ export const ReactionBox = () => {
                 {
                     reactions.map(reactObj => (
                         <>
-                        <div className="reaction_outline">
+                        <button className="reaction_outline" onClick={(event) => {
+                            setIdToDelete(reactObj.id)
+                            setDeleteModalShow(true)}}>
                             <img className="reaction_image" src={reactObj.image_url} alt={reactObj.label} width="15" height="15"/>
-                        </div>
+                        </button>
                         </>
                     ))
                 }
+                {DeleteReactionModal({
+                    show: deleteModalShow,
+                    onHide: () => setDeleteModalShow(false)
+                })}
                 <button className="reaction_create_new" onClick={() => {setModalShow(true)}}>
                     <BsPlusCircleFill />
                 </button>
