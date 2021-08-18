@@ -101,7 +101,6 @@ export const ReactionBox = () => {
                     show: modalShow,
                     onHide: () => setModalShow(false),
                 })}
-}
             </div>
         </>
     )
