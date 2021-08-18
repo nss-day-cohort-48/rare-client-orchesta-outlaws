@@ -1,7 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { PostContext } from "./PostProvider";
-import "./Post.css";
+import { Image } from "react-bootstrap";
+import "./PostDetail.css";
 
 export const PostDetail = () => {
   const { postId } = useParams();
@@ -12,12 +13,30 @@ export const PostDetail = () => {
     getPost(postId).then(setPost);
   }, [postId]);
 
+  // TODO backend should be doing this
+  const author = (post) => {
+    return `${post.rare_user.user.first_name} ${post.rare_user.user.last_name}`;
+  };
+
   return (
     <>
       {post ? (
-        <>
-          <h2>{post.title}</h2>
-        </>
+        <div className="post-detail__container">
+          <h2 className="post-detail__title">{post.title}</h2>
+          <div
+            children={post.category.label}
+            className="post-detail__category"
+          />
+          <div className="post-detail__image-container">
+            <Image className="post-detail__image" src={post.image_url} fluid />
+          </div>
+          <div className="post-detail__row-container">
+            <div className="post-detail__author">By {author(post)} </div>
+            <div className="reaction_container">I am the comments button!</div>
+            <div className="reaction_container">I am a reaction!</div>
+          </div>
+          <p>{post.content}</p>
+        </div>
       ) : (
         <> {"...loading..."} </>
       )}

@@ -1,0 +1,34 @@
+.post-detail__author {
+  /**/
+}
+
+.post-detail__image-container {
+  max-height: 20rem;
+  overflow: hidden;
+  z-index: 10;
+}
+
+/* enable to allow full images to be viewed more easily -- kinda annoying tbh
+.post-detail__image-container:hover {
+  overflow: visible;
+} 
+*/
+
+.post-detail__title {
+  /**/
+}
+
+.post-detail__category {
+  /**/
+}
+
+.post-detail__container {
+  margin: 2rem;
+}
+
+.post-detail__row-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+}
