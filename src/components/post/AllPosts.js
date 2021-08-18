@@ -12,7 +12,8 @@ import "./Post.css";
 export const AllPosts = (props) => {
   const history = useHistory();
   const [posts, setPosts] = useState([]);
-  const { getAllPosts } = useContext(PostContext);
+  const [lastClicked, setLastClicked] = useState(null);
+  const { getAllPosts, deletePost } = useContext(PostContext);
   const { postReactions, getPostReactions } = useContext(PostReactionContext);
   useEffect(() => {
     getAllPosts().then(setPosts);
@@ -33,18 +34,29 @@ export const AllPosts = (props) => {
           <p>Are you sure you want to delete this post?</p>
         </Modal.Body>
         <Modal.Footer className="modal_footer">
-          <Button onClick={props.onHide}>Yes</Button>
+          <Button
+            onClick={() => {
+              deletePost(lastClicked).then(() => {
+                setLastClicked(null);
+                getAllPosts().then(setPosts);
+                props.onHide();
+              });
+            }}
+          >
+            Yes
+          </Button>
           <Button onClick={props.onHide}>Cancel</Button>
         </Modal.Footer>
       </Modal>
     );
   };
+
   return (
     <div className="allposts__container">
       <Table bordered className="allposts__table">
         <thead>
           <tr>
-            <th></th> {/* first column is for buttons */}
+            <th>{/* first column is for buttons */}</th>
             <th>Title</th>
             <th>Author</th>
             <th>Date</th>
@@ -62,6 +74,7 @@ export const AllPosts = (props) => {
                       <FaTrashAlt
                         onClick={(e) => {
                           e.preventDefault();
+                          setLastClicked(p.id);
                           setModalShow(true);
                         }}
                       />

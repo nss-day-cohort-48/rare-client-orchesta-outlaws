@@ -19,12 +19,19 @@ export const PostProvider = (props) => {
     );
   };
 
+  const deletePost = (id) => {
+    return authFetch(`${apiURL}/posts/${id}`, {
+      method: "DELETE",
+    });
+  };
+
   return (
     <PostContext.Provider
       value={{
         getUserPosts,
         getUserSubbedPosts,
         getAllPosts,
+        deletePost,
       }}
     >
       {props.children}
