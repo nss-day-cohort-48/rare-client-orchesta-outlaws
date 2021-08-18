@@ -1,99 +1,100 @@
 .add-post {
-    display: flex;
-    flex-direction: row-reverse;
-    margin-bottom: 1rem;
-    width: 92%;
+  display: flex;
+  flex-direction: row-reverse;
+  margin-bottom: 1rem;
+  width: 92%;
 }
 
 .add-post__text {
-    position: relative;
-    top: 1rem;
-    margin: 0 1rem;
+  position: relative;
+  top: 1rem;
+  margin: 0 1rem;
 }
 
 .add-post__icon {
-    font-size: 2.5rem;
-    cursor: pointer;
+  font-size: 2.5rem;
+  cursor: pointer;
+}
+
+.allposts__container {
+  margin-left: 10rem;
+  margin-right: 4rem;
 }
 
 .posts {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .post {
-    border: solid black 2px;
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    margin-bottom: 0.8rem;
-    padding: 2.5rem;
-    width: 85%;
+  border: solid black 2px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  margin-bottom: 0.8rem;
+  padding: 2.5rem;
+  width: 85%;
 }
 
 .post__header {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .post__title {
-    margin: 0rem;
-    color: #404040;
+  margin: 0rem;
+  color: #404040;
 }
 
 .post__image--container {
-    margin: 2rem;
+  margin: 2rem;
 }
 
 .post__image {
-    display: block;
-    margin: 0 auto;
-    width: 50%;
+  display: block;
+  margin: 0 auto;
+  width: 50%;
 }
 
 .post__footer {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .post__author {
-    flex: 1;
-    padding: 0.5rem;
+  flex: 1;
+  padding: 0.5rem;
 }
 
 .post__reaction-count {
-    border: solid black 1px;
-    padding: 0.5rem;
-    margin: 0 1rem;
+  border: solid black 1px;
+  padding: 0.5rem;
+  margin: 0 1rem;
 }
 
 .post__edit-icon {
-    font-size: 2rem;
-    margin: 0 1rem;
-    cursor: pointer;
+  font-size: 2rem;
+  margin: 0 1rem;
+  cursor: pointer;
 }
 
 .post__delete-icon {
-    font-size: 2rem;
-    margin: 0 0 0 1rem;
-    cursor: pointer;
+  font-size: 2rem;
+  margin: 0 0 0 1rem;
+  cursor: pointer;
 }
 
 .modal {
-    text-align: center;
+  text-align: center;
 }
 
 .modal_header {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .modal_footer {
-    border-top: none;
-    display: flex;
-    justify-content: space-evenly;
-}
-
-.tags {
-    display: flex;
+  border-top: none;
+  display: flex;
+  justify-content: space-evenly;
 }

@@ -1,0 +1,18 @@
+.reaction_container {
+    border: 1px black solid;
+    border-radius: 10px;
+    margin: 2rem .5rem;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+.reaction_outline {
+    margin: 0rem 1rem;
+}
+
+.reaction_create_new {
+    margin: 0rem 1rem;
+    border: none;
+    background-color: white;
+}
