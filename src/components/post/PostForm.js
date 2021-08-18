@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react"
 import { PostContext } from "../post/PostProvider"
 import { CategoryContext } from "../category/CategoryProvider";
 import { TagContext } from "../tag/TagProvider";
-import { PostTagContext } from "../postTag/PostTagProvider";
 import "./Post.css"
 import { useHistory, useParams } from 'react-router-dom';
 
@@ -10,6 +9,7 @@ export const PostForm = () => {
     const { createPost, updatePost, getPostById } = useContext(PostContext)
     const [post, setPost] = useState({});
     const { categories, getAllCategories } = useContext(CategoryContext)
+    const { tags, getAllTags } = useContext(TagContext)
     const [isLoading, setIsLoading] = useState(true);
     const history = useHistory();
     const { postId } = useParams()
@@ -17,6 +17,7 @@ export const PostForm = () => {
     useEffect(() => {
         if (postId) {
             getAllCategories()
+            getAllTags()
             getPostById(parseInt(postId))
                 .then(post => {
                     setPost(post)
@@ -24,6 +25,7 @@ export const PostForm = () => {
                 })
         } else {
             getAllCategories()
+            getAllTags()
             setIsLoading(false)
         }
     }, [])
@@ -33,7 +35,6 @@ export const PostForm = () => {
         newPost[event.target.id] = event.target.value
         setPost(newPost)
     }
-
 
     const handleSavePost = () => {
         setIsLoading(true);
@@ -50,7 +51,7 @@ export const PostForm = () => {
                 .then(() => history.push(`/posts/my_posts`))
         } else {
             createPost({
-                category: post.category_id,
+                category: post.category,
                 title: post.title,
                 publication_date: new Date().toISOString().slice(0, 10),
                 image_url: post.image_url,
@@ -81,7 +82,7 @@ export const PostForm = () => {
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <select name="category_id" id="category_id" className="form-control" value={post.category_id} onChange={handlePostInputChange}>
+                    <select name="category" id="category" className="form-control" value={post.category} onChange={handlePostInputChange}>
                         <option value="0">Category Select</option>
                         {categories.map(c => (
                             <option key={c.id} value={c.id}>
@@ -94,6 +95,15 @@ export const PostForm = () => {
 
             <fieldset>
                 <div className="form-group tags">
+                    <h4>Tags</h4>
+                    {tags.map(t => {
+                        return (
+                            <>
+                            <label>{t.label}</label>
+                            <input type="checkbox" id={t.id} value={t.id} onChange={handleTagInputChange}/>
+                            </>
+                        )
+                    })}
                 </div>
             </fieldset>
             <button className="btn btn-primary"
