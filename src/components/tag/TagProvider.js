@@ -1,19 +1,22 @@
-import React, { createContext } from "react";
+import React, { createContext, useState } from "react";
+import { apiURL } from "../../utils/api";
+import { authFetch } from "../../utils/auth";
 
 export const TagContext = createContext()
 
 export const TagProvider = (props) => {
-    const apiURL = "http://localhost:8088"
+    const [tags, setTags] = useState([])
     
     const getAllTags = () => {
-        return fetch(`${apiURL}/tags`)
+        return authFetch(`${apiURL}/tags`)
         .then((res) => res.json())
+        .then(setTags)
     }
 
     return (
         <TagContext.Provider
             value={{
-                getAllTags
+                tags, getAllTags
             }}
         >
             {props.children}

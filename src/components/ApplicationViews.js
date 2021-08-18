@@ -28,30 +28,30 @@ export const ApplicationViews = () => {
           <CategoryProvider>
             <PostReactionProvider>
               <ReactionProvider>
-                <Route exact path="/">
-                  <SubbedPosts />
-                </Route>
-                <Route exact path="/posts">
-                  <AllPosts />
-                </Route>
-                <Route exact path="/posts/my_posts">
-                  <MyPosts />
-                </Route>
-                <Route exact path="/posts/detail/:postId(\d+)">
-                  <PostDetail />
-                </Route>
-                <Route exact path="/posts/create">
-                  <PostForm />
-                </Route>
-                <Route exact path="/posts/edit/:postId(\d+)">
-                  <PostForm />
-                </Route>
-                <Route exact path="/categories">
-                  <CategoryList />
-                </Route>
-                <Route exact path="/reactions">
-                  <ReactionBox />
-                </Route>
+                    <Route exact path="/">
+                      <SubbedPosts />
+                    </Route>
+                    <Route exact path="/posts">
+                      <AllPosts />
+                    </Route>
+                    <Route exact path="/posts/my_posts">
+                      <MyPosts />
+                    </Route>
+                    <Route exact path="/posts/detail/:postId(\d+)">
+                      <PostDetail />
+                    </Route>
+                    <Route exact path="/posts/create">
+                      <PostForm />
+                    </Route>
+                    <Route exact path="/posts/edit/:postId(\d+)">
+                      <PostForm />
+                    </Route>
+                    <Route exact path="/categories">
+                      <CategoryList />
+                    </Route>
+                    <Route exact path="/reactions">
+                      <ReactionBox />
+                    </Route>
               </ReactionProvider>
             </PostReactionProvider>
           </CategoryProvider>
