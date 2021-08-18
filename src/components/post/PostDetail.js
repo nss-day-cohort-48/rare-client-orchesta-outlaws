@@ -19,8 +19,8 @@ export const PostDetail = () => {
             <div>
             <button onClick={() => {
                history.push(`/posts/${postId}/newcomment`) 
-            }}><button>
-                Add Comment</button>
+            }}>
+                Add Comment
             </button>
             </div>
         </>

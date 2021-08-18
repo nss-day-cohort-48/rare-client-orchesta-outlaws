@@ -5,11 +5,11 @@ import { CommentContext } from './CommentProvider'
 export const CommentForm = () => {
     const { postId } = useParams()
     const history = useHistory()
-    const {createComment } = useState(CommentContext)
+    const {createComment } = useContext(CommentContext)
 
     const [comment, setComment] = useState({
         content: "",
-        author: localStorage.getItem("lu_token"),
+        author: localStorage.getItem("rare_user_id"),
         subject: postId
     })
 
@@ -24,7 +24,7 @@ export const CommentForm = () => {
 
         const comment = {
             content: comment.content,
-            author: localStorage.getItem("lu_token"),
+            author: localStorage.getItem("rare_user_id"),
             subject: postId
         }
 
@@ -39,7 +39,7 @@ export const CommentForm = () => {
             <div className="form-group">
                 <label htmlFor="content">Comment: </label>
                 <textarea type="text" name="content" required autoFocus className="form-control"
-                    value={currentReview.review}
+                    value={comment.content}
                     onChange={handleUserInput}
                 />
             </div>

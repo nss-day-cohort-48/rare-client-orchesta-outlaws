@@ -1,4 +1,3 @@
-import React, { createContext, useState } from "react"
 import React, { createContext, useState } from "react";
 import { apiURL } from "../../utils/api";
 import { authFetch } from "../../utils/auth";
@@ -32,24 +31,24 @@ export const TagProvider = (props) => {
             },
             body: JSON.stringify(tagObj)
         })
-        .then(getTags)
+        .then(getAllTags)
     }
 
     const deleteTag = (tagId) => {
         return fetch(`http://localhost:8088/tags/${tagId}`, {
             method: "DELETE"
         })
-        .then(getTags)
+        .then(getAllTags)
     }
 
     return (
-        <CommentContext.Provider value=
+        <TagContext.Provider value=
             {{
                 tags, getAllTags, createTag,
-                updateTag, deleteTag, 
+                updateTag, deleteTag
             }}>
             {props.children}
-        </CommentContext.Provider>
+        </TagContext.Provider>
     )
 }
 

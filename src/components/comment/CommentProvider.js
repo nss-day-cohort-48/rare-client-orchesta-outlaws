@@ -1,4 +1,6 @@
 import React, { createContext, useState } from "react"
+import { authFetch } from "../../utils/auth";
+import { apiURL } from "../../utils/api";
 
 export const CommentContext = createContext()
 
@@ -6,13 +8,18 @@ export const CommentProvider = (props) => {
     const [comments, setComments] = useState([])
    
 
+    const getAllComments = () => {
+        return authFetch(`${apiURL}/comments`)
+        .then(res => res.json())
+    }
+
     const getPostComments = (id) => {
-        return fetch(`http://localhost:8088/comments?post_id=${id}`)
+        return authFetch(`${apiURL}/comments?post=${id}`)
         .then(res => res.json())
     }
 
     const createComment = (newComm) => {
-        return fetch("http://localhost:8088/comments", {
+        return authFetch(`${apiURL}/comments`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -21,26 +28,26 @@ export const CommentProvider = (props) => {
         })}
 
     const deleteComment = (commId) => {
-        return fetch(`http://localhost:8088/comments/${commId}`, {
+        return authFetch(`${apiURL}/comments/${commId}`, {
             method: "DELETE"
         })
-        .then(getPostComments)
+        /*.then(getPostComments)*/
     }
 
     const updateComment = commObj => {
-        return fetch(`http://localhost:8088/comments/${commObj.id}`, {
+        return authFetch(`${apiURL}/comments/${commObj.id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(commObj)
         })
-        .then(getPostComments)
+        /*.then(getPostComments)*/
     }
 
     return (
         <CommentContext.Provider value={{
-            comments, getPostComments, deleteComment, updateComment, createComment
+            comments, getPostComments, getAllComments, deleteComment, updateComment, createComment
         }}>
             {props.children}
         </CommentContext.Provider>
