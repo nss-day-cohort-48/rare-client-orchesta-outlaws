@@ -20,7 +20,7 @@ export const ReactionProvider = (props) => {
   };
 
   const createReaction = (reactObj) => {
-    return fetch(`${apiURL}/reactions`, {
+    return authFetch(`${apiURL}/reactions`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

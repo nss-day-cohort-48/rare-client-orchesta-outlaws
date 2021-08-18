@@ -9,6 +9,8 @@
 
 .reaction_outline {
     margin: 0rem 1rem;
+    border: none;
+    background-color: white;
 }
 
 .reaction_create_new {
