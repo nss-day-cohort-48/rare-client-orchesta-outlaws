@@ -1,6 +1,6 @@
 # Rare: The Publishing Platform for the Discerning Writer
 
-***Backend Repo => https://github.com:nss-day-cohort-48/rare-api-orchestra-outlaws***
+***Backend Repo => https://github.com/nss-day-cohort-48/rare-api-orchestra-outlaws***
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
