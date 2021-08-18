@@ -10,9 +10,6 @@ export const PostForm = () => {
     const { createPost, updatePost, getPostById } = useContext(PostContext)
     const [post, setPost] = useState({});
     const { categories, getAllCategories } = useContext(CategoryContext)
-    const { tags, getAllTags } = useContext(TagContext)
-    const { getPostTagsByPostId, createPostTag, deletePostTag } = useContext(PostTagContext)
-    const [postTags, setPostTags] = useState([])
     const [isLoading, setIsLoading] = useState(true);
     const history = useHistory();
     const { postId } = useParams()
@@ -20,17 +17,13 @@ export const PostForm = () => {
     useEffect(() => {
         if (postId) {
             getAllCategories()
-            getAllTags()
             getPostById(parseInt(postId))
                 .then(post => {
                     setPost(post)
-                    // getPostTagsByPostId(post.id)
-                        // .then(setPostTags)
                     setIsLoading(false)
                 })
         } else {
             getAllCategories()
-            getAllTags()
             setIsLoading(false)
         }
     }, [])
@@ -47,8 +40,7 @@ export const PostForm = () => {
         if (postId) {
             updatePost({
                 id: parseInt(postId),
-                user_id: parseInt(localStorage.getItem('rare_user_id')),
-                category_id: post.category_id,
+                category: post.category_id,
                 title: post.title,
                 publication_date: post.publication_date,
                 image_url: post.image_url,
@@ -58,9 +50,7 @@ export const PostForm = () => {
                 .then(() => history.push(`/posts/my_posts`))
         } else {
             createPost({
-                id: parseInt(postId),
-                user_id: parseInt(localStorage.getItem('rare_user_id')),
-                category_id: post.category_id,
+                category: post.category_id,
                 title: post.title,
                 publication_date: new Date().toISOString().slice(0, 10),
                 image_url: post.image_url,

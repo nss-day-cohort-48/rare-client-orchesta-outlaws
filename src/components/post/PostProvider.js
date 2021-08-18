@@ -11,7 +11,7 @@ export const PostProvider = (props) => {
   };
 
   const getPostById = id => {
-    return authfetch(`${apiURL}/posts/${id}`).then(res => res.json())
+    return authFetch(`${apiURL}/posts/${id}`).then((res) => res.json());
 }
 
   const getUserPosts = (id) => {

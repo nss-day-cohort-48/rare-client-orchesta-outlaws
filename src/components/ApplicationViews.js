@@ -9,8 +9,6 @@ import { PostForm } from "./post/PostForm";
 import { PostProvider } from "./post/PostProvider";
 import { SubbedPosts } from "./post/SubbedPosts";
 import { PostReactionProvider } from "./postReaction/PostReactionProvdier";
-import { PostTagProvider } from "./postTag/PostTagProvider";
-import { TagProvider } from "./tag/TagProvider";
 import { ReactionBox } from "./reaction/ReactionBox";
 import { ReactionProvider } from "./reaction/ReactionProvider";
 import { UserProvider } from "./user/UserProvider";
@@ -30,8 +28,6 @@ export const ApplicationViews = () => {
           <CategoryProvider>
             <PostReactionProvider>
               <ReactionProvider>
-                <TagProvider>
-                  <PostTagProvider>
                     <Route exact path="/">
                       <SubbedPosts />
                     </Route>
@@ -56,8 +52,6 @@ export const ApplicationViews = () => {
                     <Route exact path="/reactions">
                       <ReactionBox />
                     </Route>
-                  </PostTagProvider>
-                </TagProvider>
               </ReactionProvider>
             </PostReactionProvider>
           </CategoryProvider>
