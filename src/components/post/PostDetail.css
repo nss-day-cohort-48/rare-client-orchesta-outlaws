@@ -2,17 +2,15 @@
   /**/
 }
 
-.post-detail__image-container {
-  max-height: 20rem;
-  overflow: hidden;
-  z-index: 10;
-}
-
 /* enable to allow full images to be viewed more easily -- kinda annoying tbh
 .post-detail__image-container:hover {
   overflow: visible;
 } 
 */
+
+.post-detail__tag-container {
+  min-width: 10rem;
+}
 
 .post-detail__title {
   /**/
@@ -23,7 +21,10 @@
 }
 
 .post-detail__container {
-  margin: 2rem;
+  margin-right: 0rem;
+  margin-left: 6rem;
+  display: flex;
+  flex-direction: row;
 }
 
 .post-detail__row-container {

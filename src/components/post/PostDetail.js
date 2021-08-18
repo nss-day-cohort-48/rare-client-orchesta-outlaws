@@ -22,20 +22,32 @@ export const PostDetail = () => {
     <>
       {post ? (
         <div className="post-detail__container">
-          <h2 className="post-detail__title">{post.title}</h2>
-          <div
-            children={post.category.label}
-            className="post-detail__category"
-          />
-          <div className="post-detail__image-container">
-            <Image className="post-detail__image" src={post.image_url} fluid />
+          <div>
+            <h2 className="post-detail__title">{post.title}</h2>
+            <div
+              children={post.category.label}
+              className="post-detail__category"
+            />
+            <div className="post-detail__image-container">
+              <Image
+                className="post-detail__image"
+                src={post.image_url}
+                fluid
+              />
+            </div>
+            <div className="post-detail__row-container">
+              <div className="post-detail__author">By {author(post)} </div>
+              <div className="reaction_container">
+                I am the comments button!
+              </div>
+              <div className="reaction_container">I am a reaction!</div>
+            </div>
+            <p>{post.content}</p>
           </div>
-          <div className="post-detail__row-container">
-            <div className="post-detail__author">By {author(post)} </div>
-            <div className="reaction_container">I am the comments button!</div>
-            <div className="reaction_container">I am a reaction!</div>
+          <div className="post-detail__tag-container">
+            <div style={{ minHeight: "2rem" }} />
+            <div className="reaction_container">I am a tag!</div>{" "}
           </div>
-          <p>{post.content}</p>
         </div>
       ) : (
         <> {"...loading..."} </>
