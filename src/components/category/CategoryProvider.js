@@ -1,4 +1,6 @@
 import React, { createContext, useState } from "react";
+import { apiURL } from "../../utils/api";
+import { authFetch } from "../../utils/auth";
 
 export const CategoryContext = createContext();
 
@@ -6,43 +8,38 @@ export const CategoryProvider = (props) => {
   const [categories, setCategories] = useState([]);
 
   const getAllCategories = () => {
-    return fetch("http://localhost:8000/categories", {
-      headers: {
-        Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
-      },
-    })
+    return authFetch(`${apiURL}/categories`)
       .then((res) => res.json())
       .then(setCategories);
   };
 
   const addCategory = (catObj) => {
-    return fetch("http://localhost:8000/categories", {
+    return authFetch(`${apiURL}/categories`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
       },
       body: JSON.stringify(catObj),
-    }).then(() => getAllCategories());
+    }).then(() => {
+      getAllCategories();
+    });
   };
 
   const updateCategory = (catObj) => {
-    return fetch(`http://localhost:8000/categories/${catObj.id}`, {
+    return authFetch(`${apiURL}/categories/${catObj.id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
       },
       body: JSON.stringify(catObj),
-    }).then(getAllCategories);
+    }).then(() => {
+      getAllCategories();
+    });
   };
 
   const deleteCategory = (catId) => {
-    return fetch(`http://localhost:8000/categories/${catId}`, {
+    return authFetch(`${apiURL}/categories/${catId}`, {
       method: "DELETE",
-      headers: {
-        Authorization: `Token ${localStorage.getItem("rare_user_id")}`,
-      },
     }).then(getAllCategories);
   };
 
