@@ -42,7 +42,20 @@ export const PostDetail = () => {
               <div className="reaction_container">
                 I am the comments button!
               </div>
-              <div className="reaction_container">I am a reaction!</div>
+              <div className="reaction_container">
+                {"reactions" in post &&
+                  post.reactions.map((r) => (
+                    <div class="reaction_outline">
+                      <Image
+                        roundedCircle
+                        src={r.image_url}
+                        alt={r.label}
+                        width="18"
+                        height="18"
+                      />
+                    </div>
+                  ))}
+              </div>
             </div>
             <p>{post.content}</p>
           </div>
