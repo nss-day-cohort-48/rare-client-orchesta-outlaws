@@ -10,6 +10,7 @@ import { PostProvider } from "./post/PostProvider";
 import { SubbedPosts } from "./post/SubbedPosts";
 import { PostReactionProvider } from "./postReaction/PostReactionProvdier";
 import { ReactionBox } from "./reaction/ReactionBox";
+import { ReactionInterface } from "./reaction/ReactionInterface";
 import { ReactionProvider } from "./reaction/ReactionProvider";
 import { UserProvider } from "./user/UserProvider";
 
@@ -51,6 +52,7 @@ export const ApplicationViews = () => {
                     </Route>
                     <Route exact path="/reactions">
                       <ReactionBox />
+                      <ReactionInterface />
                     </Route>
               </ReactionProvider>
             </PostReactionProvider>
