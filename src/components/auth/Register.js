@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { register } from "../../utils/auth";
 import "./Auth.css";
 
 export const Register = (props) => {
@@ -24,26 +25,13 @@ export const Register = (props) => {
         password: password.current.value,
       };
 
-      return (
-        fetch("http://127.0.0.1:8000/register", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-          body: JSON.stringify(newUser),
-        })
-          // if we get a 201 CREATED status, return the json
-          .then((res) => (res.status === 201 ? res.json() : null))
-          .then((newUser) => {
-            if (newUser) {
-              localStorage.setItem("rare_user_id", newUser.id);
-              history.push("/");
-            } else {
-              window.alert("User already exists.");
-            }
-          })
-      );
+      return register(newUser).then((success) => {
+        if (success) {
+          history.push("/");
+        } else {
+          window.alert("User already exists or could not be created.");
+        }
+      });
     } else {
       window.alert("Passwords do not match.");
     }
