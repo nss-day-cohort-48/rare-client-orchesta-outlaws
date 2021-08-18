@@ -24,19 +24,13 @@ export const PostDetail = () => {
         <div className="post-detail__container">
           <div>
             <div className="post-detail__row-container">
-              <h2 className="post-detail__title">{post.title}</h2>
+              <h2 className="post-detail__title" children={post.title} />
               <div
                 children={post.category.label}
                 className="post-detail__category"
               />
             </div>
-            <div className="post-detail__image-container">
-              <Image
-                className="post-detail__image"
-                src={post.image_url}
-                fluid
-              />
-            </div>
+            <Image className="post-detail__image" src={post.image_url} fluid />
             <div className="post-detail__row-container">
               <div className="post-detail__author">By {author(post)} </div>
               <div className="reaction_container">

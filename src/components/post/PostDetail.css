@@ -1,13 +1,3 @@
-.post-detail__author {
-  /**/
-}
-
-/* enable to allow full images to be viewed more easily -- kinda annoying tbh
-.post-detail__image-container:hover {
-  overflow: visible;
-} 
-*/
-
 .post-detail__tag-container {
   min-width: 10rem;
 }
