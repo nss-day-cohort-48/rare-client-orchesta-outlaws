@@ -23,11 +23,13 @@ export const PostDetail = () => {
       {post ? (
         <div className="post-detail__container">
           <div>
-            <h2 className="post-detail__title">{post.title}</h2>
-            <div
-              children={post.category.label}
-              className="post-detail__category"
-            />
+            <div className="post-detail__row-container">
+              <h2 className="post-detail__title">{post.title}</h2>
+              <div
+                children={post.category.label}
+                className="post-detail__category"
+              />
+            </div>
             <div className="post-detail__image-container">
               <Image
                 className="post-detail__image"
@@ -46,7 +48,10 @@ export const PostDetail = () => {
           </div>
           <div className="post-detail__tag-container">
             <div style={{ minHeight: "2rem" }} />
-            <div className="reaction_container">I am a tag!</div>{" "}
+            {"tags" in post &&
+              post.tags.map((t) => (
+                <div className="reaction_container" children={t.label} />
+              ))}
           </div>
         </div>
       ) : (
