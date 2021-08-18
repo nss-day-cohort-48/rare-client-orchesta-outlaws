@@ -48,3 +48,10 @@
 .categories__button {
     background-color: white;
 }
+
+.invisibutton {
+    border: none;
+    background-color: white;
+    padding: 0rem 0rem .2rem 0rem;
+    margin: 0rem .2rem 0rem 0rem;
+}

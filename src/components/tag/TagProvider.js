@@ -1,4 +1,7 @@
 import React, { createContext, useState } from "react"
+import React, { createContext, useState } from "react";
+import { apiURL } from "../../utils/api";
+import { authFetch } from "../../utils/auth";
 
 export const TagContext = createContext()
 
@@ -6,9 +9,9 @@ export const TagProvider = (props) => {
     const [tags, setTags] = useState([])
 
     const getAllTags = () => {
-        return fetch(`http://localhost:8088/tags`)
-            .then(res => res.json())
-            .then(setTags)
+        return authFetch(`${apiURL}/tags`)
+        .then((res) => res.json())
+        .then(setTags)
     }
 
     const createTag = (newTag) => {
@@ -49,3 +52,5 @@ export const TagProvider = (props) => {
         </CommentContext.Provider>
     )
 }
+
+
