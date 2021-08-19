@@ -15,10 +15,9 @@ export const ReactionInterface = (post) => {
 
     useEffect(() => {
         getPostById(1).then((data) => {
-            setLocalPost(data)})
-    }, [])
-    
-    console.log(localPost)
+            setLocalPost(data.reaction_counter)})
+        }, [])
+        
 
     return (
         <>
@@ -30,8 +29,8 @@ export const ReactionInterface = (post) => {
                     <>
                         <button className="reaction_button">
                             <img className="reaction_image" src={reactObj.image_url} alt={reactObj.label} width="15" height="15"/>
+                            <div className="reaction_count">{localPost[reactObj.id]?.count}</div>
                         </button>
-                        
                     </>
                 ))
             }
