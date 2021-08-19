@@ -39,23 +39,7 @@ export const ReactionInterface = (post) => {
             setLocalPost(data)})
     }, [])
     
-    useEffect(() => {
-        const post_reactions = localPost.reactions
-        let reaction_counter = {}
-        debugger
-        for (let i = 0; i < reactions.length; i++) {
-            for (let n = 0; n < post_reactions.length; n++) {
-                if (reactions[i].id === post_reactions[n].id) {
-                    if (reaction_counter[reactions[i].id] == NaN) {
-                        reaction_counter[reactions[i].id] = 1;
-                    } else {
-                        reaction_counter[reactions[i].id] = reaction_counter[reactions[i].id] + 1;
-                    }
-                }
-            }
-        }
-        console.log(reaction_counter)
-    }, [localPost])
+    console.log(localPost)
 
     return (
         <>
@@ -65,9 +49,10 @@ export const ReactionInterface = (post) => {
             {
                 reactions.map(reactObj => (
                     <>
-                    <button className="reaction_button">
-                        <img className="reaction_image" src={reactObj.image_url} alt={reactObj.label} width="15" height="15"/>
-                    </button>
+                        <button className="reaction_button">
+                            <img className="reaction_image" src={reactObj.image_url} alt={reactObj.label} width="15" height="15"/>
+                        </button>
+                        
                     </>
                 ))
             }
