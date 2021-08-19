@@ -67,7 +67,7 @@ export const AllPosts = (props) => {
               </td>
               <td>{p.publication_date}</td>
               <td>{p.category.label}</td>
-              <td>TAGS</td>
+              <td>{p.tags.map((t) => t.label).join(", ")}</td>
             </tr>
           ))}
         </tbody>
