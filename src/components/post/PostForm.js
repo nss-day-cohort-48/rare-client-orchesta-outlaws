@@ -41,7 +41,6 @@ export const PostForm = () => {
     const handleTagInputChange = (event) => {
         const newPostTags = [...postTags]
         const foundPostTag = newPostTags.find(pt => pt.id === parseInt(event.target.id))
-        console.log(foundPostTag)
         if (foundPostTag) {
             const foundPostTagPosition = newPostTags.indexOf(foundPostTag)
             newPostTags.splice(foundPostTagPosition, 1)
@@ -49,7 +48,6 @@ export const PostForm = () => {
             newPostTags.push({ id: parseInt(event.target.id), label: event.target.value })
         }
         setPostTags(newPostTags)
-        console.log(newPostTags)
     }
 
     const handleSavePost = () => {
