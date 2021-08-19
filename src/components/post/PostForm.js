@@ -10,6 +10,7 @@ export const PostForm = () => {
     const [post, setPost] = useState({});
     const { categories, getAllCategories } = useContext(CategoryContext)
     const { tags, getAllTags } = useContext(TagContext)
+    const [postTags, setPostTags] = useState([])
     const [isLoading, setIsLoading] = useState(true);
     const history = useHistory();
     const { postId } = useParams()
@@ -21,6 +22,7 @@ export const PostForm = () => {
             getPostById(parseInt(postId))
                 .then(post => {
                     setPost(post)
+                    setPostTags(post.tags)
                     setIsLoading(false)
                 })
         } else {
@@ -36,17 +38,32 @@ export const PostForm = () => {
         setPost(newPost)
     }
 
+    const handleTagInputChange = (event) => {
+        const newPostTags = [...postTags]
+        const foundPostTag = newPostTags.find(pt => pt.id === parseInt(event.target.id))
+        console.log(foundPostTag)
+        if (foundPostTag) {
+            const foundPostTagPosition = newPostTags.indexOf(foundPostTag)
+            newPostTags.splice(foundPostTagPosition, 1)
+        } else {
+            newPostTags.push({ id: parseInt(event.target.id), label: event.target.value })
+        }
+        setPostTags(newPostTags)
+        console.log(newPostTags)
+    }
+
     const handleSavePost = () => {
         setIsLoading(true);
         if (postId) {
             updatePost({
                 id: parseInt(postId),
-                category: post.category_id,
+                category: post.category.id,
                 title: post.title,
                 publication_date: post.publication_date,
                 image_url: post.image_url,
                 content: post.content,
-                approved: post.approved
+                approved: post.approved,
+                tags: postTags
             })
                 .then(() => history.push(`/posts/my_posts`))
         } else {
@@ -56,7 +73,8 @@ export const PostForm = () => {
                 publication_date: new Date().toISOString().slice(0, 10),
                 image_url: post.image_url,
                 content: post.content,
-                approved: 0
+                approved: 0,
+                tags: postTags
             })
                 .then(() => history.push("/posts/my_posts"))
         }
@@ -82,7 +100,7 @@ export const PostForm = () => {
             </fieldset>
             <fieldset>
                 <div className="form-group">
-                    <select name="category" id="category" className="form-control" value={post.category} onChange={handlePostInputChange}>
+                    <select name="category" id="category" className="form-control" value={post.category?.id} onChange={handlePostInputChange}>
                         <option value="0">Category Select</option>
                         {categories.map(c => (
                             <option key={c.id} value={c.id}>
@@ -97,12 +115,23 @@ export const PostForm = () => {
                 <div className="form-group tags">
                     <h4>Tags</h4>
                     {tags.map(t => {
-                        return (
-                            <>
-                            <label>{t.label}</label>
-                            <input type="checkbox" id={t.id} value={t.id} onChange={handleTagInputChange}/>
-                            </>
-                        )
+                        const foundTag = postTags.find(pt => pt.id === t.id)
+                        if (foundTag) {
+                            return (
+                                <>
+                                    <input type="checkbox" id={t.id} required autoFocus value={t.label} onChange={handleTagInputChange}
+                                        checked="checked" />
+                                    <label htmlFor={t.id}>{t.label}</label>
+                                </>
+                            )
+                        } else {
+                            return (
+                                <>
+                                    <input type="checkbox" id={t.id} required autoFocus value={t.label} onChange={handleTagInputChange} />
+                                    <label htmlFor={t.id}>{t.label}</label>
+                                </>
+                            )
+                        }
                     })}
                 </div>
             </fieldset>
