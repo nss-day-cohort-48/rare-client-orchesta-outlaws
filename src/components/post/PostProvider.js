@@ -1,10 +1,12 @@
-import React, { createContext } from "react";
+import React, { createContext, useState } from "react";
 import { apiURL } from "../../utils/api";
 import { authFetch } from "../../utils/auth";
 
 export const PostContext = createContext();
 
 export const PostProvider = (props) => {
+  const [searchTerms, setSearchTerms] = useState([])
+
   const getAllPosts = () => {
     return authFetch(`${apiURL}/posts`).then((res) => res.json());
   };
@@ -64,6 +66,8 @@ export const PostProvider = (props) => {
         createPost,
         updatePost,
         deletePost,
+        searchTerms,
+        setSearchTerms
       }}
     >
       {props.children}

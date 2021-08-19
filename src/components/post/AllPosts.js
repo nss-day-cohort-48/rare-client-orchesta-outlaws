@@ -13,11 +13,21 @@ export const AllPosts = (props) => {
   const history = useHistory();
   const [posts, setPosts] = useState([]);
   const [lastClicked, setLastClicked] = useState(null);
-  const { getAllPosts, deletePost } = useContext(PostContext);
+  const { getAllPosts, deletePost, searchTerms } = useContext(PostContext);
   const { postReactions, getPostReactions } = useContext(PostReactionContext);
+  const [filteredPosts, setFiltered] = useState([])
   useEffect(() => {
     getAllPosts().then(setPosts);
   }, []);
+
+  useEffect(() => {
+    if (searchTerms !== "") {
+      const subset = posts.filter(p => p.title.toLowerCase().includes(searchTerms))
+      setFiltered(subset)
+    } else {
+      setFiltered(posts)
+    }
+  }, [searchTerms, posts])
 
   const [modalShow, setModalShow] = useState(false);
   const MyVerticallyCenteredModal = (props) => {
@@ -65,7 +75,7 @@ export const AllPosts = (props) => {
           </tr>
         </thead>
         <tbody>
-          {posts.map((p) => (
+          {filteredPosts.map((p) => (
             <tr key={p.id}>
               <td>
                 {p.isMine && (
