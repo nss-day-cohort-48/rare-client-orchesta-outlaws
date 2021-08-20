@@ -1,14 +1,28 @@
 .navbar {
     display: flex;
     flex-wrap: nowrap;
-    justify-content: left;
+    justify-content: space-between;
 }
 
 .navbar__item {
-    flex-basis: 20%;
     list-style-type: none;
+}
+
+.navbar__item_logout {
+    list-style-type: none;
+    margin-left: 6rem;
 }
 
 .navbar__logo {
     max-height: 6rem;
+}
+
+.navbar__link_wrapper {
+    border: 1px solid blue;
+    border-radius: 2px;
+    text-align: center;
+    width: 12rem;
+    padding: .5rem 0rem;
+    background-color: white;
+    color: blue;
 }

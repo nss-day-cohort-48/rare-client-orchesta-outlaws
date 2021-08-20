@@ -15,29 +15,37 @@ export const NavBar = () => {
         </Link>
       </li>
       <li className="navbar__item">
-        <Link className="navbar__link" to="/posts">
-          Posts
-        </Link>
+        <div className="navbar__link_wrapper">
+          <Link className="navbar__link" to="/posts">
+            All Posts
+          </Link>
+        </div>
       </li>
       <li className="navbar__item">
-        <Link className="navbar__link" to="/posts/my_posts">
-          My Posts
-        </Link>
+        <div className="navbar__link_wrapper">      
+          <Link className="navbar__link" to="/posts/my_posts">
+            My Posts
+          </Link>
+        </div>
       </li>
       <li className="navbar__item">
-        <Link className="navbar__link" to="/categories">
-          Category Manager
-        </Link>
+        <div className="navbar__link_wrapper">    
+          <Link className="navbar__link" to="/categories">
+            Category Manager
+          </Link>
+        </div>
       </li>
       <li className="navbar__item">
-        <Link className="navbar__link" to="/reactions">
-          Reaction Manager
-        </Link>
+        <div className="navbar__link_wrapper">
+          <Link className="navbar__link" to="/reactions">
+            Reaction Manager
+          </Link>
+        </div>
       </li>
       {localStorage.getItem("rare_user_id") !== null ? (
-        <li className="nav-item">
+        <li className="navbar__item_logout">
           <button
-            className="nav-link fakeLink"
+            className="navbar__link_wrapper"
             onClick={() => {
               logout();
               history.push({ pathname: "/" });
