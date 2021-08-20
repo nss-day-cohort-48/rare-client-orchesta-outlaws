@@ -30,6 +30,7 @@ export const CommentList = () => {
     }, [postId])
 
     console.log(comments)
+    
 
     const MyVerticallyCenteredCommentModal = (props) => {
         return (
@@ -49,7 +50,7 @@ export const CommentList = () => {
                         onClick={() => {
                             deleteComment(lastClicked).then(() => {
                                 setLastClicked(null);
-                                getPostComments(postId).then(setComments);
+                                getPostComments(parseInt(postId)).then(setComments);
                                 props.onHide();
                             });
                         }}
@@ -83,6 +84,7 @@ export const CommentList = () => {
                         <div className="comment__delete-icon">
                             <FaTrashAlt
                                 onClick={(e) => {
+                                    setLastClicked(comm.id)
                                     e.preventDefault();
                                     setModalShow(true);
                                 }}

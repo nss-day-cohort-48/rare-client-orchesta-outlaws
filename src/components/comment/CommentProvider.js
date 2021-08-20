@@ -30,7 +30,8 @@ export const CommentProvider = (props) => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(newComm)
-        })}
+        }).then((res) => res.json());
+    }
 
     const deleteComment = (commId) => {
         return authFetch(`${apiURL}/comments/${commId}`, {
@@ -47,7 +48,7 @@ export const CommentProvider = (props) => {
             },
             body: JSON.stringify(commObj)
         })
-        /*.then(getPostComments)*/
+        .then(getPostComments())
     }
 
     return (

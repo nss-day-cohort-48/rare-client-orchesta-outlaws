@@ -15,7 +15,7 @@ export const CommentForm = () => {
   const [comment, setComment] = useState({
     content: "",
     author: localStorage.getItem("rare_user_id"),
-    subject: 0,
+    subject: post.title,
     publication_date: new Date().toISOString().slice(0, 10),
   });
 
@@ -56,19 +56,20 @@ const comContent = comments.map(c => {
   const handleSaveComment = (event) => {
     event.preventDefault();
 
-    const comment = {
+    const thisComment = {
       content: comment.content,
       author: localStorage.getItem("rare_user_id"),
-      subject: post.id,
-      publication_date: comment.publication_date,
+      post: post.id,
+      publication_date: comment.publication_date
     };
 
-    createComment(comment).then(() => history.push(`/posts/detail/${post.id}`));
+    createComment(thisComment).then(() => history.push("/posts"));
   };
 
   return (
     <form className="commentForm">
-      <h2 className="commentForm__name">Update Comment:</h2>
+        {commId ? (<h2 className="commentForm__name">Update Comment:</h2>):<h2 className="commentForm__name">Add New Comment:</h2> }
+      
       <fieldset>
         <div className="form-group">
           <label htmlFor="content">Comment: </label>
@@ -93,7 +94,7 @@ const comContent = comments.map(c => {
               id: commId,
               content: comment.content,
               author: comment.author,
-              post: post.id,
+              subject: post.title,
               publication_date: comment.publication_date
             };
 
