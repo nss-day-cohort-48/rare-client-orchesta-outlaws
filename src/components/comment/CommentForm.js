@@ -20,17 +20,19 @@ export const CommentForm = () => {
   });
 
   useEffect(() => {
-    getPostComments(parseInt(post.id)).then((comments) => setComments(comments));
+    getPostComments(parseInt(post.id)).then((comments) =>
+      setComments(comments)
+    );
   }, []);
 
-const comContent = comments.map(c => {
-     if (parseInt(commId) === c.id){
-         return c.content
-     }
- })
- const contentCom = comContent.find(c => c !== undefined)
- console.log(contentCom)
- console.log(commId)
+  const comContent = comments.map((c) => {
+    if (parseInt(commId) === c.id) {
+      return c.content;
+    }
+  });
+  const contentCom = comContent.find((c) => c !== undefined);
+  console.log(contentCom);
+  console.log(commId);
 
   useEffect(() => {
     if (commId) {
@@ -39,13 +41,13 @@ const comContent = comments.map(c => {
           content: com.content,
           author: com.author,
           subject: com.post.title,
-          publication_date: new Date().toISOString().slice(0, 10)
+          publication_date: new Date().toISOString().slice(0, 10),
         });
       });
     }
   }, [commId]);
 
-  console.log(comment)
+  console.log(comment);
 
   const handleUserInput = (event) => {
     const newCommentState = { ...comment };
@@ -60,7 +62,7 @@ const comContent = comments.map(c => {
       content: comment.content,
       author: localStorage.getItem("rare_user_id"),
       post: post.id,
-      publication_date: comment.publication_date
+      publication_date: comment.publication_date,
     };
 
     createComment(thisComment).then(() => history.push("/posts"));
@@ -68,8 +70,12 @@ const comContent = comments.map(c => {
 
   return (
     <form className="commentForm">
-        {commId ? (<h2 className="commentForm__name">Update Comment:</h2>):<h2 className="commentForm__name">Add New Comment:</h2> }
-      
+      {commId ? (
+        <h2 className="commentForm__name">Update Comment:</h2>
+      ) : (
+        <h2 className="commentForm__name">Add New Comment:</h2>
+      )}
+
       <fieldset>
         <div className="form-group">
           <label htmlFor="content">Comment: </label>
@@ -95,10 +101,12 @@ const comContent = comments.map(c => {
               content: comment.content,
               author: comment.author,
               subject: post.title,
-              publication_date: comment.publication_date
+              publication_date: comment.publication_date,
             };
 
-            updateComment(com).then(() => history.push("/posts"));
+            updateComment(com).then(() =>
+              history.push(`/posts/detail/${post.id}/comments`)
+            );
           }}
           className="btn btn-primary"
         >
