@@ -22,6 +22,7 @@ export const PostDetail = () => {
     getAllReactions()
   }, [])
 
+  // Original implementation of reaction interface
   const ReactionCounter = () => {
     return reactions.map(reactObj => (
       <>
@@ -40,6 +41,32 @@ export const PostDetail = () => {
         </button>
       </>
       ))
+  }
+
+  // modified implementation of reaction interface (lacks 'label' key)
+  const newReactionCounter = () => {
+    const reactions = post.reaction_counter
+    let reactionArray = []
+    for (let key in reactions) {
+      reactionArray.push({'id': key, 'count': reactions[key].count, 'image_url': reactions[key].image_url})
+    }
+    return reactionArray.map(reactObj => (
+      <div className="reaction_display">
+        <button className="reaction_button" onClick={(event) => {
+            event.preventDefault()
+            createPostReaction({"post": postId, "reaction": reactObj.id})
+            if (refresh) {
+              setRefresh(false) }
+            else {
+              setRefresh(true) }
+            }}>
+        <div className="reaction_image_container">
+              <Image className="reaction_image" src={reactObj.image_url} width="15" height="15"/>
+            </div>
+            <div className="reaction_counter">{reactObj.count}</div>
+        </button>
+      </div>
+    ))
   }
 
   // TODO backend should be doing this
@@ -68,6 +95,11 @@ export const PostDetail = () => {
               <div className="reaction_interface_outline">
               {
                 ReactionCounter()
+              }
+              </div>
+              <div className="reaction_interface_outline">
+              {
+                newReactionCounter()
               }
               </div>
             </div>
