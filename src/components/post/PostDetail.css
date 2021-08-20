@@ -49,3 +49,8 @@
 .reaction_image_container {
   padding: 0rem .5rem 0rem 0rem;
 }
+
+.reaction_counter {
+  padding: .35rem 0rem 0rem 0rem;
+  font-size: x-small;
+}
