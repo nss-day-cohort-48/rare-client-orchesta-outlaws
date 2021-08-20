@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { PostContext } from "./PostProvider";
 import { Image } from "react-bootstrap";
 import "./PostDetail.css";
@@ -34,7 +34,10 @@ export const PostDetail = () => {
             <div className="post-detail__row-container">
               <div className="post-detail__author">By {author(post)} </div>
               <div className="reaction_container">
-                I am the comments button!
+                <Link to={`${postId}/comments`}><button>View All Comments for this Post</button></Link>
+              </div>
+              <div className="reaction_container">
+                <Link to={`posts/${postId}/newcomment`}><button>Add Comment</button></Link>
               </div>
               <div className="reaction_container">
                 {"reactions" in post &&

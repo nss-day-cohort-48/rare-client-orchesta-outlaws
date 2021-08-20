@@ -56,10 +56,13 @@ export const ApplicationViews = () => {
                   <Route exact path="/reactions">
                     <ReactionBox />
                   </Route>
-                  <Route exact path="/posts/:postId(\d+)/comments">
+                  <Route exact path="/posts/detail/:postId(\d+)/comments">
                     <CommentList />
                   </Route>
-                  <Route exact path="/posts/:postId(\d+)/newcomment">
+                  <Route exact path="/posts/detail/:commId(\d+)/edit">
+                    <CommentForm />
+                  </Route>
+                  <Route exact path="/posts/detail/:postId(\d+)/newcomment">
                     <CommentForm />
                   </Route>
                 </CommentProvider>

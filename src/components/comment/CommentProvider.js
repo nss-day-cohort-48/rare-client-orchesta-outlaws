@@ -13,6 +13,11 @@ export const CommentProvider = (props) => {
         .then(res => res.json())
     }
 
+    const getCommentById = (id) => {
+        return authFetch(`${apiURL}/comments/${id}`)
+        .then(res => res.json())
+    }
+
     const getPostComments = (id) => {
         return authFetch(`${apiURL}/comments?post=${id}`)
         .then(res => res.json())
@@ -47,7 +52,8 @@ export const CommentProvider = (props) => {
 
     return (
         <CommentContext.Provider value={{
-            comments, getPostComments, getAllComments, deleteComment, updateComment, createComment
+            comments, getPostComments, getAllComments, deleteComment, 
+            updateComment, createComment, getCommentById
         }}>
             {props.children}
         </CommentContext.Provider>
