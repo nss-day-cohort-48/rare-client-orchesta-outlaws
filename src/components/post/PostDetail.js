@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { PostContext } from "./PostProvider";
-import { ReactionContext } from "../reaction/ReactionProvider";
 import { PostReactionContext } from "../postReaction/PostReactionProvdier";
 import { Image } from "react-bootstrap";
 import "./PostDetail.css";
@@ -11,39 +10,13 @@ export const PostDetail = () => {
   const [post, setPost] = useState(null);
   const [refresh, setRefresh] = useState(false)
   const { getPost } = useContext(PostContext);
-  const { reactions, getAllReactions } = useContext(ReactionContext)
   const { createPostReaction } = useContext(PostReactionContext)
 
   useEffect(() => {
     getPost(postId).then(setPost);
   }, [postId, refresh]);
 
-  useEffect(() => {
-    getAllReactions()
-  }, [])
-
-  // Original implementation of reaction interface
-  const ReactionCounter = () => {
-    return reactions.map(reactObj => (
-      <>
-        <button className="reaction_button" onClick={(event) => {
-            event.preventDefault()
-            createPostReaction({"post": postId, "reaction": reactObj.id})
-            if (refresh) {
-              setRefresh(false) }
-            else {
-              setRefresh(true) }
-            }}>
-            <div className="reaction_image_container">
-              <Image className="reaction_image" src={reactObj.image_url} alt={reactObj.label} width="15" height="15"/>
-            </div>
-            <div className="reaction_counter">{post.reaction_counter[reactObj.id]? post.reaction_counter[reactObj.id]?.count : 0}</div>
-        </button>
-      </>
-      ))
-  }
-
-  // modified implementation of reaction interface (lacks 'label' key)
+  // modified implementation of reaction interface
   const newReactionCounter = () => {
     const reactions = post.reaction_counter
     let reactionArray = []
@@ -91,11 +64,6 @@ export const PostDetail = () => {
               <div className="post-detail__author">By {author(post)} </div>
               <div>
                 I am the comments button!
-              </div>
-              <div className="reaction_interface_outline">
-              {
-                ReactionCounter()
-              }
               </div>
               <div className="reaction_interface_outline">
               {
