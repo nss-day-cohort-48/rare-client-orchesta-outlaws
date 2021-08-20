@@ -24,6 +24,7 @@ export const AllPosts = (props) => {
   useEffect(() => {
     if (searchTerms !== "") {
       const subset = posts.filter(p => p.title.toLowerCase().includes(searchTerms))
+      const ord
       setFiltered(subset)
     } else {
       setFiltered(posts)

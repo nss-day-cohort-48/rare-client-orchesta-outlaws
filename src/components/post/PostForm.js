@@ -68,7 +68,7 @@ export const PostForm = () => {
             createPost({
                 category: post.category,
                 title: post.title,
-                publication_date: new Date().toISOString().slice(0, 10),
+                publication_date: new Date().toISOString(),
                 image_url: post.image_url,
                 content: post.content,
                 approved: 0,
