@@ -15,7 +15,7 @@ export const CommentForm = () => {
   const [comment, setComment] = useState({
     content: "",
     author: localStorage.getItem("rare_user_id"),
-    subject: post.title,
+    subject: post.id,
     publication_date: new Date().toISOString().slice(0, 10),
   });
 
@@ -100,8 +100,13 @@ export const CommentForm = () => {
               id: commId,
               content: comment.content,
               author: comment.author,
+<<<<<<< HEAD
+              post: post.id,
+              publication_date: comment.publication_date
+=======
               subject: post.title,
               publication_date: comment.publication_date,
+>>>>>>> ed38908101ff9998daa76b79d926c5660d5859a2
             };
 
             updateComment(com).then(() =>
