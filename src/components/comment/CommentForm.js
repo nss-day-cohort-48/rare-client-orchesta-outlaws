@@ -6,7 +6,7 @@ import { PostContext } from "../post/PostProvider";
 export const CommentForm = () => {
   const { post } = useContext(PostContext);
   console.log(post.id + " is the current post's primary key");
-  const { postId } = useParams();
+  const { commId } = useParams();
   const history = useHistory();
   const [comments, setComments] = useState([]);
   const { createComment, updateComment, getCommentById, getPostComments } =
@@ -20,21 +20,32 @@ export const CommentForm = () => {
   });
 
   useEffect(() => {
-    getPostComments(parseInt(postId)).then((comments) => setComments(comments));
-  }, [postId]);
+    getPostComments(parseInt(post.id)).then((comments) => setComments(comments));
+  }, []);
+
+const comContent = comments.map(c => {
+     if (parseInt(commId) === c.id){
+         return c.content
+     }
+ })
+ const contentCom = comContent.find(c => c !== undefined)
+ console.log(contentCom)
+ console.log(commId)
 
   useEffect(() => {
-    if (postId) {
-      getCommentById(parseInt(postId)).then((com) => {
+    if (commId) {
+      getCommentById(parseInt(commId)).then((com) => {
         setComment({
-          content: com.context,
+          content: com.content,
           author: com.author,
           subject: com.post.title,
-          publication_date: com.publication_date,
+          publication_date: new Date().toISOString().slice(0, 10)
         });
       });
     }
-  }, [postId]);
+  }, [commId]);
+
+  console.log(comment)
 
   const handleUserInput = (event) => {
     const newCommentState = { ...comment };
@@ -48,11 +59,11 @@ export const CommentForm = () => {
     const comment = {
       content: comment.content,
       author: localStorage.getItem("rare_user_id"),
-      subject: postId,
+      subject: post.id,
       publication_date: comment.publication_date,
     };
 
-    createComment(comment).then(() => history.push(`/posts/detail/${postId}`));
+    createComment(comment).then(() => history.push(`/posts/detail/${post.id}`));
   };
 
   return (
@@ -73,19 +84,20 @@ export const CommentForm = () => {
         </div>
       </fieldset>
 
-      {postId ? (
+      {commId ? (
         <button
           onClick={(evt) => {
             evt.preventDefault();
 
             const com = {
-              id: comment.id,
+              id: commId,
               content: comment.content,
               author: comment.author,
-              post: postId,
+              post: post.id,
+              publication_date: comment.publication_date
             };
 
-            updateComment(com).then(() => history.push("posts/details"));
+            updateComment(com).then(() => history.push("/posts"));
           }}
           className="btn btn-primary"
         >

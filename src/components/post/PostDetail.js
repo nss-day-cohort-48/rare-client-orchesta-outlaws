@@ -38,7 +38,7 @@ export const PostDetail = () => {
                 </Link>
               </div>
               <div className="reaction_container">
-                <Link to={`posts/${postId}/newcomment`}>
+                <Link to={`posts/detail/${postId}/newcomment`}>
                   <button>Add Comment</button>
                 </Link>
               </div>
