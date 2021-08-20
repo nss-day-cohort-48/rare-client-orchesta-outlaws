@@ -61,7 +61,7 @@ export const PostDetail = () => {
               setRefresh(true) }
             }}>
         <div className="reaction_image_container">
-              <Image className="reaction_image" src={reactObj.image_url} width="15" height="15"/>
+              <Image className="reaction_image" src={reactObj.image_url} alt={reactObj.label} width="15" height="15"/>
             </div>
             <div className="reaction_counter">{reactObj.count}</div>
         </button>
