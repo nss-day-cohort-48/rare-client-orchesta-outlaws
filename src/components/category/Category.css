@@ -23,7 +23,7 @@
 .categories__new {
     margin-right: 2rem;
     border: 1.5px solid black;
-    border-radius: 10%;
+    border-radius: 15px;
     height: 12rem;
     width: 30rem;
 }
