@@ -14,6 +14,7 @@ import { ReactionBox } from "./reaction/ReactionBox";
 import { ReactionProvider } from "./reaction/ReactionProvider";
 import { TagProvider } from "./tag/TagProvider";
 import { UserProvider } from "./user/UserProvider";
+import { UserDetail } from "./user/UserDetail";
 
 export const ApplicationViews = () => {
   return (
@@ -55,6 +56,9 @@ export const ApplicationViews = () => {
                   </Route>
                   <Route exact path="/reactions">
                     <ReactionBox />
+                  </Route>
+                  <Route exact path="/users/detail/:userId(\d+)">
+                    <UserDetail />
                   </Route>
                 </TagProvider>
               </ReactionProvider>
