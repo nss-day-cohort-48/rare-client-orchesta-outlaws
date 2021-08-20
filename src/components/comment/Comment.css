@@ -1,0 +1,23 @@
+.comments__container {
+	border: 1px dashed black;
+	width: 50%;
+	margin: 0 auto;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comments {
+	display: flex;
+	flex-flow: row wrap;
+	padding: 2px;
+	border: 1px dashed salmon;
+}
+
+.comment__card {
+	flex-basis: 50%;
+	border: 1px dotted goldenrod;
+	justify-content: space-between;
+}
+

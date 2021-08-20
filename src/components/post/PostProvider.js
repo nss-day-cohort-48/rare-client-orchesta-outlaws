@@ -56,6 +56,8 @@ export const PostProvider = (props) => {
     });
   };
 
+  const [post, setPost] = useState(null);
+
   return (
     <PostContext.Provider
       value={{
@@ -67,6 +69,8 @@ export const PostProvider = (props) => {
         createPost,
         updatePost,
         deletePost,
+        post,
+        setPost,
         searchTerms,
         setSearchTerms,
       }}
