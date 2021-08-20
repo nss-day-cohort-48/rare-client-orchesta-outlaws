@@ -7,6 +7,11 @@ export const PostContext = createContext();
 export const PostProvider = (props) => {
   const [searchTerms, setSearchTerms] = useState([]);
 
+  const getMyPosts = () => {
+    return authFetch(`${apiURL}/posts/my_posts`).then((res) => res.json());
+  };
+
+
   const getAllPosts = () => {
     return authFetch(`${apiURL}/posts`).then((res) => res.json());
   };
@@ -15,8 +20,10 @@ export const PostProvider = (props) => {
     return authFetch(`${apiURL}/posts/${id}`).then((res) => res.json());
   };
 
+
   const getSubbedPosts = () => {
     return authFetch(`${apiURL}/posts/subscriptions`).then((res) => res.json());
+
   };
 
   const getPost = (id) => {
@@ -52,6 +59,7 @@ export const PostProvider = (props) => {
   return (
     <PostContext.Provider
       value={{
+        getMyPosts,
         getAllPosts,
         getPost,
         getPostById,
