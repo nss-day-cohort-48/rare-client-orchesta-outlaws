@@ -23,3 +23,34 @@
   align-items: center;
   justify-content: space-around;
 }
+
+.reaction_interface_outline {
+  border: 1px black solid;
+  border-radius: 10px;
+  margin: 2rem .5rem;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+}
+
+.reaction_individual {
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.reaction_button {
+  margin: 0rem 1rem;
+  border: none;
+  background-color: white;
+  display: flex;
+  flex-flow: row wrap;
+}
+
+.reaction_image_container {
+  padding: 0rem .5rem 0rem 0rem;
+}
+
+.reaction_counter {
+  padding: .35rem 0rem 0rem 0rem;
+  font-size: x-small;
+}
