@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { PostList } from "./PostList";
 import { PostContext } from "./PostProvider";
 import { PostReactionContext } from "../postReaction/PostReactionProvdier";
@@ -16,7 +16,7 @@ export const AllPosts = (props) => {
   const [lastClicked, setLastClicked] = useState(null);
   const { getAllPosts, deletePost, searchTerms } = useContext(PostContext);
   const { postReactions, getPostReactions } = useContext(PostReactionContext);
-  const [filteredPosts, setFiltered] = useState([])
+  const [filteredPosts, setFiltered] = useState([]);
 
   useEffect(() => {
     getAllPosts().then(setPosts);
@@ -24,18 +24,20 @@ export const AllPosts = (props) => {
 
   useEffect(() => {
     if (searchTerms !== "") {
-      const subset = posts.filter(p => p.title.toLowerCase().includes(searchTerms))
-      const orderedsubset = subset.sort((a,b) => {
-        return (b.id - a.id)
-      })
-      setFiltered(orderedsubset)
+      const subset = posts.filter((p) =>
+        p.title.toLowerCase().includes(searchTerms)
+      );
+      const orderedsubset = subset.sort((a, b) => {
+        return b.id - a.id;
+      });
+      setFiltered(orderedsubset);
     } else {
-      const orderedposts = posts.sort((a,b) => {
-        return (b.id - a.id)
-      })
-      setFiltered(orderedposts)
+      const orderedposts = posts.sort((a, b) => {
+        return b.id - a.id;
+      });
+      setFiltered(orderedposts);
     }
-  }, [searchTerms, posts])
+  }, [searchTerms, posts]);
 
   const [modalShow, setModalShow] = useState(false);
 
@@ -80,7 +82,11 @@ export const AllPosts = (props) => {
               </td>
               <td>{p.title}</td>
               <td>
-                {p.rare_user.user.first_name + " " + p.rare_user.user.last_name}
+                <Link to={`/users/detail/${p.rare_user.id}`}>
+                  {p.rare_user.user.first_name +
+                    " " +
+                    p.rare_user.user.last_name}
+                </Link>
               </td>
               <td>{p.publication_date}</td>
               <td>{p.category.label}</td>
