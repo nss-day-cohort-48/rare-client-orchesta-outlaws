@@ -7,6 +7,7 @@ import { MyPosts } from "./post/MyPosts";
 import { PostDetail } from "./post/PostDetail";
 import { PostForm } from "./post/PostForm";
 import { PostProvider } from "./post/PostProvider";
+import { PostSearch } from "./post/PostSearch";
 import { SubbedPosts } from "./post/SubbedPosts";
 import { PostReactionProvider } from "./postReaction/PostReactionProvdier";
 import { ReactionBox } from "./reaction/ReactionBox";
@@ -34,6 +35,7 @@ export const ApplicationViews = () => {
                     <SubbedPosts />
                   </Route>
                   <Route exact path="/posts">
+                    <PostSearch />
                     <AllPosts />
                   </Route>
                   <Route exact path="/posts/my_posts">
