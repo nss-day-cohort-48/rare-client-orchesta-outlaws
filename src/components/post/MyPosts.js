@@ -18,7 +18,12 @@ export const MyPosts = () => {
   const history = useHistory();
 
   useEffect(() => {
-    getMyPosts().then(setPosts);
+    getMyPosts().then(posts => {
+      const orderedPosts = posts.sort((a,b) => {
+        return (b.id - a.id)
+      })
+      setPosts(orderedPosts)
+    });
   }, []);
 
   const dateConvert = (ISOdate) => {
