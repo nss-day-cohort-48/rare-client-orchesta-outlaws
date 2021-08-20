@@ -17,6 +17,7 @@ export const AllPosts = (props) => {
   const { getAllPosts, deletePost, searchTerms } = useContext(PostContext);
   const { postReactions, getPostReactions } = useContext(PostReactionContext);
   const [filteredPosts, setFiltered] = useState([])
+
   useEffect(() => {
     getAllPosts().then(setPosts);
   }, [lastClicked]);
@@ -24,10 +25,15 @@ export const AllPosts = (props) => {
   useEffect(() => {
     if (searchTerms !== "") {
       const subset = posts.filter(p => p.title.toLowerCase().includes(searchTerms))
-      const ord
-      setFiltered(subset)
+      const orderedsubset = subset.sort((a,b) => {
+        return (b.id - a.id)
+      })
+      setFiltered(orderedsubset)
     } else {
-      setFiltered(posts)
+      const orderedposts = posts.sort((a,b) => {
+        return (b.id - a.id)
+      })
+      setFiltered(orderedposts)
     }
   }, [searchTerms, posts])
 
