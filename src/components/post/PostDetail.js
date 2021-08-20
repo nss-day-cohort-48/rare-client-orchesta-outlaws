@@ -6,8 +6,7 @@ import "./PostDetail.css";
 
 export const PostDetail = () => {
   const { postId } = useParams();
-  const [post, setPost] = useState(null);
-  const { getPost } = useContext(PostContext);
+  const { getPost, post, setPost } = useContext(PostContext);
 
   useEffect(() => {
     getPost(postId).then(setPost);
@@ -34,10 +33,14 @@ export const PostDetail = () => {
             <div className="post-detail__row-container">
               <div className="post-detail__author">By {author(post)} </div>
               <div className="reaction_container">
-                <Link to={`${postId}/comments`}><button>View All Comments for this Post</button></Link>
+                <Link to={`${postId}/comments`}>
+                  <button>View All Comments for this Post</button>
+                </Link>
               </div>
               <div className="reaction_container">
-                <Link to={`posts/${postId}/newcomment`}><button>Add Comment</button></Link>
+                <Link to={`posts/${postId}/newcomment`}>
+                  <button>Add Comment</button>
+                </Link>
               </div>
               <div className="reaction_container">
                 {"reactions" in post &&

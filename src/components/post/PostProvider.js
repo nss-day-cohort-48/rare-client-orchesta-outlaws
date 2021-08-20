@@ -1,4 +1,4 @@
-import React, { createContext } from "react";
+import React, { useState, createContext } from "react";
 import { apiURL } from "../../utils/api";
 import { authFetch } from "../../utils/auth";
 
@@ -53,6 +53,8 @@ export const PostProvider = (props) => {
     });
   };
 
+  const [post, setPost] = useState(null);
+
   return (
     <PostContext.Provider
       value={{
@@ -64,6 +66,8 @@ export const PostProvider = (props) => {
         createPost,
         updatePost,
         deletePost,
+        post,
+        setPost,
       }}
     >
       {props.children}
