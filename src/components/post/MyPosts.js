@@ -18,11 +18,11 @@ export const MyPosts = () => {
   const history = useHistory();
 
   useEffect(() => {
-    getMyPosts().then(posts => {
-      const orderedPosts = posts.sort((a,b) => {
-        return (b.id - a.id)
-      })
-      setPosts(orderedPosts)
+    getMyPosts().then((posts) => {
+      const orderedPosts = posts.sort((a, b) => {
+        return b.id - a.id;
+      });
+      setPosts(orderedPosts);
     });
   }, []);
 
@@ -88,10 +88,12 @@ export const MyPosts = () => {
                 <img className="post__image" src={p.image_url} />
               </div>
               <div className="post__footer">
-                <div className="post__author">
-                  Author: {p.rare_user.user.first_name}{" "}
-                  {p.rare_user.user.last_name}
-                </div>
+                <Link to={`/users/detail/${p.rare_user.id}`}>
+                  <div className="post__author">
+                    Author: {p.rare_user.user.first_name}{" "}
+                    {p.rare_user.user.last_name}
+                  </div>
+                </Link>
                 <div className="post__reaction-count">
                   {postReactions.length > 0
                     ? postReactions.filter((pr) => pr.post_id === p.id).length

@@ -2,6 +2,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin: 4rem;
 }
 
 .user-detail__side {
@@ -11,8 +12,13 @@
 .user-detail__main {
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
 }
 
 .user-detail__info-item {
   margin-bottom: 0.8rem;
+}
+
+.user-detail__info {
+  margin: 1rem;
 }

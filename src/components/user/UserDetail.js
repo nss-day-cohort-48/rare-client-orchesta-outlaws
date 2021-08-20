@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { UserContext } from "./UserProvider";
-import { Image } from "react-bootstrap";
+import { Image, Button } from "react-bootstrap";
 import "./UserDetail.css";
 
 export const UserDetail = (props) => {
@@ -31,7 +31,7 @@ export const UserDetail = (props) => {
             </div>
           </div>
           <div className="user-detail__side">
-            <div>Subscribe!</div>
+            <Button>Subscribe!</Button>
           </div>
         </>
       ) : (
