@@ -100,13 +100,8 @@ export const CommentForm = () => {
               id: commId,
               content: comment.content,
               author: comment.author,
-<<<<<<< HEAD
-              post: post.id,
-              publication_date: comment.publication_date
-=======
               subject: post.title,
               publication_date: comment.publication_date,
->>>>>>> ed38908101ff9998daa76b79d926c5660d5859a2
             };
 
             updateComment(com).then(() =>
