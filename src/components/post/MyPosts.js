@@ -11,11 +11,12 @@ import { BsFillGearFill } from "react-icons/bs";
 import "./Post.css";
 
 export const MyPosts = () => {
-  const { getMyPosts } = useContext(PostContext);
+  const { getMyPosts, deletePost } = useContext(PostContext);
   const [posts, setPosts] = useState([]);
   const { postReactions, getPostReactions } = useContext(PostReactionContext);
   const [modalShow, setModalShow] = useState(false);
   const history = useHistory();
+  const [lastClicked, setLastClicked] = useState(null);
 
   useEffect(() => {
     getMyPosts().then(posts => {
@@ -48,7 +49,18 @@ export const MyPosts = () => {
           <p>Are you sure you want to delete this post?</p>
         </Modal.Body>
         <Modal.Footer className="modal_footer">
-          <Button onClick={props.onHide}>Yes</Button>
+          <Button onClick={props => {
+            deletePost(lastClicked)
+            .then(() => {
+              getMyPosts().then(posts => {
+                const orderedPosts = posts.sort((a,b) => {
+                  return (b.id - a.id)
+                })
+                setPosts(orderedPosts)
+              });
+            })
+            setModalShow(false)
+          }}>Yes</Button>
           <Button onClick={props.onHide}>Cancel</Button>
         </Modal.Footer>
       </Modal>
@@ -110,6 +122,7 @@ export const MyPosts = () => {
                   <FaTrashAlt
                     onClick={(e) => {
                       e.preventDefault();
+                      setLastClicked(p.id)
                       setModalShow(true);
                     }}
                   />
