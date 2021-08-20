@@ -80,7 +80,9 @@ export const AllPosts = (props) => {
                   </div>
                 )}
               </td>
-              <td>{p.title}</td>
+              <td>
+                <Link to={`/posts/detail/${p.id}`}>{p.title}</Link>
+              </td>
               <td>
                 <Link to={`/users/detail/${p.rare_user.id}`}>
                   {p.rare_user.user.first_name +
