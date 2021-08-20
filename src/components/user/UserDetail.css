@@ -1,4 +1,18 @@
 .user-detail__container {
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+}
+
+.user-detail__side {
+  flex-basis: 20%;
+}
+
+.user-detail__main {
+  display: flex;
+  flex-direction: row;
+}
+
+.user-detail__info-item {
+  margin-bottom: 0.8rem;
 }

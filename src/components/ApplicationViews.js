@@ -55,7 +55,7 @@ export const ApplicationViews = () => {
                   <Route exact path="/reactions">
                     <ReactionBox />
                   </Route>
-                  <Route exact path="/user">
+                  <Route exact path="/users/detail/:userId(\d+)">
                     <UserDetail />
                   </Route>
                 </TagProvider>
